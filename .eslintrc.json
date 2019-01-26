@@ -6,7 +6,6 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:flowtype/recommended",
         "plugin:react/recommended",
         "plugin:jest/recommended"
     ],
@@ -17,7 +16,6 @@
         "sourceType": "module"
     },
     "plugins": [
-        "flowtype",
         "react",
         "jest"
     ],
@@ -42,8 +40,7 @@
     },
     "settings": {
         "react": {
-            "version": "16.6",
-            "flowVersion": "0.83"
+            "version": "16.6"
         }
     }
 }

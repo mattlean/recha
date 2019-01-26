@@ -1,6 +1,5 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const cssnano = require('cssnano')
-const FlowWebpackPlugin = require('flow-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -49,11 +48,6 @@ const loadFiles = ({ exclude, include, options, test, type } = {}) => {
 exports.autoprefix = () => ({
   loader: 'postcss-loader',
   options: { plugins: () => [require('autoprefixer')()] }
-})
-
-// Run Flow type checking
-exports.checkTypes = () => ({
-  plugins: [new FlowWebpackPlugin()]
 })
 
 // Clean paths
