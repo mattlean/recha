@@ -8,7 +8,7 @@ import { setupStore } from './util/store'
 
 const root = document.getElementById('root')
 
-const store = setupStore(todos, null, [thunk])
+const store = setupStore(todos, undefined, [thunk])
 
 if(root) {
   render(<Root store={store} />, root)
