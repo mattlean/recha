@@ -111,7 +111,12 @@ exports.loadJS = ({ exclude, include } = {}) => ({
         use: 'babel-loader',
         exclude,
         include,
-        test: /\.jsx?$/
+        test: /\.(js|ts)x?$/
+      },
+      {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre'
       }
     ]
   }

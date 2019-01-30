@@ -1,10 +1,9 @@
-// @flow
 import { combineReducers } from 'redux'
 
-import type { Action, State_List, State_List_ErrorMessage, State_List_Ids, State_List_IsFetching } from '../types'
+import { ActionsResponse, ActionToggleTodoSuccess, StateList, StateListErrorMessage, StateListIds, StateListIsFetching } from '../types'
 
-const createList = (filter: string) => {
-  const handleToggle = (state: State_List_Ids, action: Action) => {
+const createList = (filter: string): ReturnType<typeof createList> => {
+  const handleToggle = (state: StateListIds, action: ActionToggleTodoSuccess): StateListIds => {
     if(action.response) {
       const { result: toggledId, entities } = action.response
 
@@ -22,7 +21,7 @@ const createList = (filter: string) => {
     return state
   }
 
-  const ids = (state: State_List_Ids = [], action: Action) => {
+  const ids = (state: StateListIds = [], action: ActionsResponse): StateListIds => {
     switch(action.type) {
       case 'ADD_TODO_SUCCESS':
         return filter !== 'completed' ? [...state, action.response.result] : state
@@ -35,7 +34,7 @@ const createList = (filter: string) => {
     }
   }
 
-  const isFetching = (state: State_List_IsFetching = false, action) => {
+  const isFetching = (state: StateListIsFetching = false, action): StateListIsFetching => {
     if(action.filter !== filter) {
       return state
     }
@@ -51,7 +50,7 @@ const createList = (filter: string) => {
     }
   }
 
-  const errorMessage = (state: State_List_ErrorMessage = null, action) => {
+  const errorMessage = (state: StateListErrorMessage = null, action): StateListErrorMessage => {
     if(filter !== action.filter) {
       return state
     }
@@ -76,14 +75,14 @@ const createList = (filter: string) => {
 
 export default createList
 
-export const getErrorMessage = (state: State_List) => {
+export const getErrorMessage = (state: StateList): StateListErrorMessage => {
   if(state.errorMessage || state.errorMessage === null) return state.errorMessage
 }
 
-export const getIds = (state: State_List) => {
+export const getIds = (state: StateList): StateListIds => {
   if(state.ids) return state.ids
 }
 
-export const getIsFetching = (state: State_List) => {
+export const getIsFetching = (state: StateList): StateListIsFetching => {
   if(state.isFetching || state.isFetching === false) return state.isFetching
 }

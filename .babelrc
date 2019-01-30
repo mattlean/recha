@@ -1,7 +1,10 @@
 {
   "env": {
     "development": {
-      "presets": [["@babel/preset-react", { "development": true }]]
+      "presets": [
+        ["@babel/preset-react", { "development": true }],
+        "@babel/preset-typescript"
+      ]
     },
     "test": {
       "presets": ["@babel/env"]

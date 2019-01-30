@@ -1,4 +1,3 @@
-const glob = require('glob')
 const merge = require('webpack-merge')
 
 const parts = require('../common/parts')
@@ -13,8 +12,6 @@ module.exports = merge([
   },
 
   parts.cleanPaths(['build/production/webpack']),
-
-  parts.checkTypes(),
 
   parts.loadHTML({
     template: `${PATHS.renderer.src}/index.html`,

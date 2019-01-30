@@ -1,9 +1,8 @@
-// @flow
 import { combineReducers } from 'redux'
 
 import byId, { getTodo } from './byId'
 import createList, * as fromList from './createList'
-import type { State } from '../types'
+import { State, StateListErrorMessage, StateListIsFetching, Todo } from '../types'
 
 const listByFilter = combineReducers({
   all: createList('all'),
@@ -18,19 +17,19 @@ const todos = combineReducers({
 
 export default todos
 
-export const getErrorMessage = (state: State, filter: string) => {
+export const getErrorMessage = (state: State, filter: string): StateListErrorMessage => {
   if(state.listByFilter) {
     return fromList.getErrorMessage(state.listByFilter[filter])
   }
 }
 
-export const getIsFetching = (state: State, filter: string) => {
+export const getIsFetching = (state: State, filter: string): StateListIsFetching => {
   if(state.listByFilter) {
     return fromList.getIsFetching(state.listByFilter[filter])
   }
 }
 
-export const getVisibleTodos = (state: State, filter: string) => {
+export const getVisibleTodos = (state: State, filter: string): Todo[] => {
   if(state.listByFilter && state.byId) {
     const ids = fromList.getIds(state.listByFilter[filter])
     if(ids) {

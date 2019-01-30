@@ -1,4 +1,3 @@
-// @flow
 import React from 'react'
 
 const FetchError = ({ onRetry, message }: { onRetry: () => void, message: string}) => (

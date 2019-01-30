@@ -7,9 +7,9 @@ const productionConfig = require('./production')
 
 const commonConfig = merge([
   {
-    entry: `${PATHS.src}/main.jsx`,
+    entry: `${PATHS.src}/main.tsx`,
 
-    resolve: { extensions: ['.js', '.jsx', '.json'] },
+    resolve: { extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'] },
 
     target: 'electron-renderer'
   },

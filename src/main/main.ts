@@ -1,6 +1,5 @@
-// @flow
-const path = require('path')
-const { app, BrowserWindow } = require('electron')
+import path from 'path'
+import { app, BrowserWindow } from 'electron'
 
 if(process.env.NODE_ENV === 'development') {
   var { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer')
@@ -33,7 +32,7 @@ app.on('ready', () => {
   win.on('ready-to-show', () => win.show())
 })
 
-app.on('windows-all-closed', () => {
+app.on('window-all-closed', () => {
   if(process.platform !== 'darwin') app.quit()
 })
 

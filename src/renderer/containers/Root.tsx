@@ -1,14 +1,13 @@
-// @flow
 import React from 'react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
-import type { Store } from 'redux'
+import { Store } from 'redux'
 
 import App from '../components/App'
-import type { State, Action, Dispatch } from '../types'
+import { State, Actions } from '../types'
 
-const Root = ({ store }: { store: Store<State, Action, Dispatch> }) => (
+const Root = ({ store }: { store: Store<State, Actions> }) => (
   <Provider store={store}>
     <Router>
       <Route path="/:filter?" component={App} />

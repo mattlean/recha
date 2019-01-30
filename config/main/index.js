@@ -7,11 +7,11 @@ const productionConfig = require('./production')
 
 const commonConfig = merge([
   {
-    entry: `${PATHS.src}/main.js`,
+    entry: `${PATHS.src}/main.ts`,
 
     node: { __dirname: false },
 
-    resolve: { extensions: ['.js', '.json'] },
+    resolve: { extensions: ['.js', '.json', '.ts'] },
 
     target: 'electron-main'
   },

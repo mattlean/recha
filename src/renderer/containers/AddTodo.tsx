@@ -1,11 +1,10 @@
-// @flow
 import React from 'react'
 import { connect } from 'react-redux'
 
 import { addTodo } from '../actions'
-import type { Dispatch } from '../types'
+import { ThunkDispatch } from '../types'
 
-let AddTodo = ({ dispatch }: { dispatch: Dispatch }) => {
+export const AddTodo = ({ dispatch }: { dispatch: ThunkDispatch }) => {
   let input
 
   return <>
@@ -23,6 +22,4 @@ let AddTodo = ({ dispatch }: { dispatch: Dispatch }) => {
   </>
 }
 
-AddTodo = connect()(AddTodo)
-
-export default AddTodo
+export default connect()(AddTodo)
