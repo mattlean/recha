@@ -23,7 +23,7 @@
     "dist": "npm run build && electron-builder",
     "dist:debug": "DEBUG=electron-builder npm run dist",
     "lint": "npm run lint:js",
-    "lint:js": "eslint --cache \"{config,src}/**/*.{js,jsx}\"",
+    "lint:js": "eslint --cache \"{config,src}/**/*.{js,jsx,ts,tsx}\"",
     "lint:styles": "stylelint src/**/*.scss src/**/*.css",
     "main:build": "webpack --env production --config config/main/index.js",
     "main:build:debug": "node --inspect-brk node_modules/.bin/webpack --env production --config config/main/index.js",
