@@ -60,14 +60,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IsaacLean/lean-js-app-starter.git"
+    "url": "git+https://github.com/IsaacLean/recha.git"
   },
   "author": "Matthew Lean",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IsaacLean/lean-js-app-starter/issues"
+    "url": "https://github.com/IsaacLean/recha/issues"
   },
-  "homepage": "https://github.com/IsaacLean/lean-js-app-starter#readme",
+  "homepage": "https://github.com/IsaacLean/recha#readme",
   "dependencies": {
     "cross-fetch": "^3.0.0",
     "normalizr": "^3.3.0",
