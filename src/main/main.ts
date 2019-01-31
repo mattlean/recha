@@ -1,7 +1,7 @@
 import path from 'path'
 import { app, BrowserWindow } from 'electron'
 
-if(process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line
   var { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer')
 }
@@ -15,7 +15,7 @@ function createWindow(): void {
     show: false
   })
 
-  if(process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:8080')
   } else {
     win.loadFile(path.join(__dirname, 'index.html'))
@@ -23,7 +23,7 @@ function createWindow(): void {
 }
 
 app.on('ready', () => {
-  if(process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     require('devtron').install()
     installExtension(REACT_DEVELOPER_TOOLS)
     installExtension(REDUX_DEVTOOLS)
@@ -34,9 +34,9 @@ app.on('ready', () => {
 })
 
 app.on('window-all-closed', () => {
-  if(process.platform !== 'darwin') app.quit()
+  if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('activate', () => {
-  if(win === null) createWindow()
+  if (win === null) createWindow()
 })

@@ -15,7 +15,7 @@ class VisibleTodoList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.filter !== prevProps.filter) {
+    if (this.props.filter !== prevProps.filter) {
       this.fetchData()
     }
   }
@@ -28,23 +28,15 @@ class VisibleTodoList extends Component {
   render() {
     const { errorMessage, isFetching, toggleTodo, todos } = this.props
 
-    if(isFetching && !todos.length) {
+    if (isFetching && !todos.length) {
       return <p>Loading...</p>
     }
 
-    if(errorMessage && !todos.length) {
-      return (
-        <FetchError
-          message={errorMessage}
-          onRetry={() => this.fetchData()}
-        />
-      )
+    if (errorMessage && !todos.length) {
+      return <FetchError message={errorMessage} onRetry={() => this.fetchData()} />
     }
 
-    return <TodoList
-      todos={todos}
-      onTodoClick={toggleTodo}
-    />
+    return <TodoList todos={todos} onTodoClick={toggleTodo} />
   }
 }
 
@@ -68,14 +60,20 @@ const mapStateToProps = (state, { match }) => {
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchTodos,
-  toggleTodo
-}, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchTodos,
+      toggleTodo
+    },
+    dispatch
+  )
 
-const VisibleTodoListContainer = withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VisibleTodoList))
+const VisibleTodoListContainer = withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(VisibleTodoList)
+)
 
 export default VisibleTodoListContainer

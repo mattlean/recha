@@ -20,7 +20,7 @@ const commonConfig = merge([
 ])
 
 module.exports = mode => {
-  if(mode === 'production') {
+  if (mode === 'production') {
     return merge(commonConfig, productionConfig, { mode })
   }
 

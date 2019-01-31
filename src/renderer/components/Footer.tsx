@@ -4,12 +4,7 @@ import FilterLink from './FilterLink'
 
 const Footer = (): JSX.Element => (
   <p>
-    Show:
-    {' '}
-    <FilterLink filter="all">All</FilterLink>
-    {' '}
-    <FilterLink filter="active">Active</FilterLink>
-    {' '}
+    Show: <FilterLink filter="all">All</FilterLink> <FilterLink filter="active">Active</FilterLink>{' '}
     <FilterLink filter="completed">Completed</FilterLink>
   </p>
 )

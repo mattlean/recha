@@ -11,7 +11,7 @@ const PATHS = require('../../PATHS')
 
 // Load files
 const loadFiles = ({ exclude, include, options, test, type } = {}) => {
-  if(type === 'url' || type === undefined) {
+  if (type === 'url' || type === undefined) {
     return {
       module: {
         rules: [
@@ -27,7 +27,7 @@ const loadFiles = ({ exclude, include, options, test, type } = {}) => {
         ]
       }
     }
-  } else if(type === 'file') {
+  } else if (type === 'file') {
     return {
       module: {
         rules: [
@@ -52,10 +52,7 @@ exports.autoprefix = () => ({
 
 // Clean paths
 exports.cleanPaths = paths => ({
-  plugins: [new CleanWebpackPlugin(
-    paths,
-    { root: PATHS.root }
-  )]
+  plugins: [new CleanWebpackPlugin(paths, { root: PATHS.root })]
 })
 
 // Extract styles into its own CSS file
@@ -81,27 +78,29 @@ exports.extractStyles = ({ exclude, filename, include, use = [] }) => {
 exports.genSourceMaps = ({ type }) => ({ devtool: type })
 
 // Load fonts
-exports.loadFonts = ({ exclude, include, options, type } = {}) => loadFiles({
-  exclude,
-  include,
-  options,
-  test: /\.(eot|ttf|woff|woff2)$/,
-  type
-})
+exports.loadFonts = ({ exclude, include, options, type } = {}) =>
+  loadFiles({
+    exclude,
+    include,
+    options,
+    test: /\.(eot|ttf|woff|woff2)$/,
+    type
+  })
 
 // Load HTML
 exports.loadHTML = options => ({
-  plugins: [ new HtmlWebpackPlugin(options) ]
+  plugins: [new HtmlWebpackPlugin(options)]
 })
 
 // Load images
-exports.loadImgs = ({ exclude, include, options, type } = {}) => loadFiles({
-  exclude,
-  include,
-  options,
-  test: /\.(gif|jpe?g|png)$/i,
-  type
-})
+exports.loadImgs = ({ exclude, include, options, type } = {}) =>
+  loadFiles({
+    exclude,
+    include,
+    options,
+    test: /\.(gif|jpe?g|png)$/i,
+    type
+  })
 
 // Load JavaScript through Babel
 exports.loadJS = ({ exclude, include } = {}) => ({
@@ -125,38 +124,42 @@ exports.loadJS = ({ exclude, include } = {}) => ({
 // Setup styles
 exports.loadStyles = ({ exclude, include } = {}) => ({
   module: {
-    rules: [{
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: { sourceMap: true }
-        },
-        {
-          loader: 'sass-loader',
-          options: { sourceMap: true }
-        }
-      ],
-      exclude,
-      include,
-      test: /\.(css|scss)$/
-    }]
+    rules: [
+      {
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { sourceMap: true }
+          },
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true }
+          }
+        ],
+        exclude,
+        include,
+        test: /\.(css|scss)$/
+      }
+    ]
   }
 })
 
 // Minify CSS
 exports.minCSS = ({ options } = {}) => ({
-  plugins: [new OptimizeCSSAssetsPlugin({
-    canPrint: false,
-    cssProcessor: cssnano,
-    cssProcessOptions: options
-  })]
+  plugins: [
+    new OptimizeCSSAssetsPlugin({
+      canPrint: false,
+      cssProcessor: cssnano,
+      cssProcessOptions: options
+    })
+  ]
 })
 
 // Minify JavaScript
 exports.minJS = () => ({
   optimization: {
-    minimizer: [new UglifyWebpackPlugin( { sourceMap: true} )]
+    minimizer: [new UglifyWebpackPlugin({ sourceMap: true })]
   }
 })
 

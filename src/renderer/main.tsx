@@ -10,6 +10,6 @@ const root = document.getElementById('root')
 
 const store = setupStore(todos, undefined, [thunk])
 
-if(root) {
+if (root) {
   render(<Root store={store} />, root)
 }

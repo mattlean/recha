@@ -6,6 +6,7 @@
     },
     "extends": [
         "eslint:recommended",
+        "prettier",
         "plugin:react/recommended",
         "plugin:jest/recommended"
     ],
@@ -16,6 +17,7 @@
         "sourceType": "module"
     },
     "plugins": [
+        "prettier",
         "react",
         "jest"
     ],

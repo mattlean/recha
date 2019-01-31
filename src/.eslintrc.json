@@ -3,11 +3,13 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
+        "prettier",
         "plugin:jest/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
         "@typescript-eslint",
+        "prettier",
         "react",
         "jest"
     ],

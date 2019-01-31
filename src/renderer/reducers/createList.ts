@@ -1,18 +1,22 @@
 import { combineReducers } from 'redux'
 
-import { ActionsResponse, ActionToggleTodoSuccess, StateList, StateListErrorMessage, StateListIds, StateListIsFetching } from '../types'
+import {
+  ActionsResponse,
+  ActionToggleTodoSuccess,
+  StateList,
+  StateListErrorMessage,
+  StateListIds,
+  StateListIsFetching
+} from '../types'
 
 const createList = (filter: string): ReturnType<typeof createList> => {
   const handleToggle = (state: StateListIds, action: ActionToggleTodoSuccess): StateListIds => {
-    if(action.response) {
+    if (action.response) {
       const { result: toggledId, entities } = action.response
 
-      if(!Array.isArray(toggledId)) {
+      if (!Array.isArray(toggledId)) {
         const { completed } = entities.todos[toggledId]
-        const shouldRemove = (
-          (completed && filter === 'active') ||
-          (!completed && filter === 'completed')
-        )
+        const shouldRemove = (completed && filter === 'active') || (!completed && filter === 'completed')
 
         return shouldRemove ? state.filter(id => id !== toggledId) : state
       }
@@ -22,7 +26,7 @@ const createList = (filter: string): ReturnType<typeof createList> => {
   }
 
   const ids = (state: StateListIds = [], action: ActionsResponse): StateListIds => {
-    switch(action.type) {
+    switch (action.type) {
       case 'ADD_TODO_SUCCESS':
         return filter !== 'completed' ? [...state, action.response.result] : state
       case 'FETCH_TODOS_SUCCESS':
@@ -35,11 +39,11 @@ const createList = (filter: string): ReturnType<typeof createList> => {
   }
 
   const isFetching = (state: StateListIsFetching = false, action): StateListIsFetching => {
-    if(action.filter !== filter) {
+    if (action.filter !== filter) {
       return state
     }
 
-    switch(action.type) {
+    switch (action.type) {
       case 'FETCH_TODOS_REQUEST':
         return true
       case 'FETCH_TODOS_SUCCESS':
@@ -51,11 +55,11 @@ const createList = (filter: string): ReturnType<typeof createList> => {
   }
 
   const errorMessage = (state: StateListErrorMessage = null, action): StateListErrorMessage => {
-    if(filter !== action.filter) {
+    if (filter !== action.filter) {
       return state
     }
 
-    switch(action.type) {
+    switch (action.type) {
       case 'FETCH_TODOS_FAILURE':
         return action.message
       case 'FETCH_TODOS_REQUEST':
@@ -76,13 +80,13 @@ const createList = (filter: string): ReturnType<typeof createList> => {
 export default createList
 
 export const getErrorMessage = (state: StateList): StateListErrorMessage => {
-  if(state.errorMessage || state.errorMessage === null) return state.errorMessage
+  if (state.errorMessage || state.errorMessage === null) return state.errorMessage
 }
 
 export const getIds = (state: StateList): StateListIds => {
-  if(state.ids) return state.ids
+  if (state.ids) return state.ids
 }
 
 export const getIsFetching = (state: StateList): StateListIsFetching => {
-  if(state.isFetching || state.isFetching === false) return state.isFetching
+  if (state.isFetching || state.isFetching === false) return state.isFetching
 }
