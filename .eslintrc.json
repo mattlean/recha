@@ -5,9 +5,9 @@
         "node": true
     },
     "extends": [
-        "eslint:recommended",
-        "prettier",
+        "airbnb-base",
         "plugin:react/recommended",
+        "prettier",
         "plugin:jest/recommended"
     ],
     "parserOptions": {
@@ -31,6 +31,8 @@
             "error",
             "unix"
         ],
+        "no-shadow": 1,
+        "no-underscore-dangle": 0,
         "quotes": [
             "error",
             "single"

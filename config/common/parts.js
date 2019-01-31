@@ -27,7 +27,9 @@ const loadFiles = ({ exclude, include, options, test, type } = {}) => {
         ]
       }
     }
-  } else if (type === 'file') {
+  }
+
+  if (type === 'file') {
     return {
       module: {
         rules: [
@@ -42,12 +44,14 @@ const loadFiles = ({ exclude, include, options, test, type } = {}) => {
       }
     }
   }
+
+  return undefined
 }
 
 // Autoprefix CSS
 exports.autoprefix = () => ({
   loader: 'postcss-loader',
-  options: { plugins: () => [require('autoprefixer')()] }
+  options: { plugins: () => [require('autoprefixer')()] } // eslint-disable-line global-require
 })
 
 // Clean paths

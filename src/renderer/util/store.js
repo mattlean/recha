@@ -1,10 +1,11 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 
+// eslint-disable-next-line import/prefer-default-export
 export const setupStore = (reducer, preloadedState, middlewares = [], devMiddlewares) => {
-  if (!middlewares) middlewares = []
+  let m = middlewares || []
 
   if (process.env.NODE_ENV === 'development' && Array.isArray(devMiddlewares)) {
-    middlewares = [...middlewares, ...devMiddlewares]
+    m = [...m, ...devMiddlewares]
   }
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

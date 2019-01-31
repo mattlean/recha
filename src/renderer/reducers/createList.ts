@@ -79,14 +79,17 @@ const createList = (filter: string): ReturnType<typeof createList> => {
 
 export default createList
 
-export const getErrorMessage = (state: StateList): StateListErrorMessage => {
+export const getErrorMessage = (state: StateList): StateListErrorMessage | undefined => {
   if (state.errorMessage || state.errorMessage === null) return state.errorMessage
+  return undefined
 }
 
-export const getIds = (state: StateList): StateListIds => {
+export const getIds = (state: StateList): StateListIds | undefined => {
   if (state.ids) return state.ids
+  return undefined
 }
 
-export const getIsFetching = (state: StateList): StateListIsFetching => {
+export const getIsFetching = (state: StateList): StateListIsFetching | undefined => {
   if (state.isFetching || state.isFetching === false) return state.isFetching
+  return undefined
 }
