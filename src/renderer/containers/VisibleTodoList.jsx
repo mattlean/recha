@@ -15,7 +15,8 @@ class VisibleTodoList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.filter !== prevProps.filter) {
+    const { filter } = this.props
+    if (filter !== prevProps.filter) {
       this.fetchData()
     }
   }
@@ -38,6 +39,11 @@ class VisibleTodoList extends Component {
 
     return <TodoList todos={todos} onTodoClick={toggleTodo} />
   }
+}
+
+VisibleTodoList.defaultProps = {
+  errorMessage: null,
+  todos: []
 }
 
 VisibleTodoList.propTypes = {

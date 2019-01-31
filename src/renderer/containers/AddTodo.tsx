@@ -15,6 +15,7 @@ export const AddTodo = ({ dispatch }: { dispatch: ThunkDispatch }): JSX.Element 
         }}
       />
       <button
+        type="button"
         onClick={() => {
           if (input) {
             dispatch(addTodo(input.value))

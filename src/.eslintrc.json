@@ -1,6 +1,6 @@
 {
     "extends": [
-        "airbnb-base",
+        "airbnb",
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
         "prettier",
@@ -30,9 +30,11 @@
         "no-shadow": 1,
         "no-underscore-dangle": 0,
         "quotes": [
-            "error",
+            "warn",
             "single"
         ],
+        "react/jsx-filename-extension": 0,
+        "react/jsx-one-expression-per-line": 0,
         "semi": [
             "error",
             "never"

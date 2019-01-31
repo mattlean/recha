@@ -5,7 +5,7 @@
         "node": true
     },
     "extends": [
-        "airbnb-base",
+        "airbnb",
         "plugin:react/recommended",
         "prettier",
         "plugin:jest/recommended"
@@ -34,7 +34,7 @@
         "no-shadow": 1,
         "no-underscore-dangle": 0,
         "quotes": [
-            "error",
+            "warn",
             "single"
         ],
         "semi": [
