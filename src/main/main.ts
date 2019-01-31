@@ -2,12 +2,13 @@ import path from 'path'
 import { app, BrowserWindow } from 'electron'
 
 if(process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line
   var { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer')
 }
 
 let win
 
-function createWindow() {
+function createWindow(): void {
   win = new BrowserWindow({
     width: 800,
     height: 600,

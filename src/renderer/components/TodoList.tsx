@@ -3,7 +3,7 @@ import React from 'react'
 import Todo from './Todo'
 import { Todo as TodoType } from '../types'
 
-const TodoList = ({ onTodoClick, todos }: { onTodoClick?: (...args: Array<any>) => any, todos: Array<TodoType> }) => (
+const TodoList = ({ onTodoClick, todos }: { onTodoClick?: (...args: any[]) => any, todos: TodoType[] }): JSX.Element => (
   <ul>
     {todos.map(todo => {
       const props = {

@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { connect } from 'react-redux'
 
 import { addTodo } from '../actions'
 import { ThunkDispatch } from '../types'
 
-export const AddTodo = ({ dispatch }: { dispatch: ThunkDispatch }) => {
+export const AddTodo = ({ dispatch }: { dispatch: ThunkDispatch }): JSX.Element => {
   let input
 
   return <>

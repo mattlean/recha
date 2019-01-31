@@ -7,10 +7,7 @@
 	"settings": {
 		"editor.insertSpaces": true,
 		"editor.tabSize": 2,
-		"eslint.validate": [
-			"javascript",
-			"typescript"
-		],
+		"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
 		"files.trimTrailingWhitespace": true,
 		"search.exclude": {
 			"build/": true,
