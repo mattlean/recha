@@ -4,7 +4,7 @@ import AddTodo from '../containers/AddTodo'
 import Footer from './Footer'
 import VisibleTodoList from '../containers/VisibleTodoList'
 
-const App = (): JSX.Element => (
+const App = (): ReturnType<typeof App> => (
   <div>
     <AddTodo />
     <VisibleTodoList />

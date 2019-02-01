@@ -9,7 +9,7 @@ const TodoList = ({
 }: {
   onTodoClick?: (...args: any[]) => any
   todos: TodoType[]
-}): JSX.Element => (
+}): ReturnType<typeof TodoList> => (
   <ul>
     {todos.map(todo => {
       const props = {

@@ -1,6 +1,14 @@
 import React from 'react'
 
-const Todo = ({ completed, onClick, text }: { completed: boolean; onClick: () => void; text: string }): JSX.Element => (
+const Todo = ({
+  completed,
+  onClick,
+  text
+}: {
+  completed: boolean
+  onClick: () => void
+  text: string
+}): ReturnType<typeof Todo> => (
   <li
     onClick={onClick}
     style={{

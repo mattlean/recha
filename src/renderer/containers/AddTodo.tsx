@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { addTodo } from '../actions'
 import { ThunkDispatch } from '../types'
 
-export const AddTodo = ({ dispatch }: { dispatch: ThunkDispatch }): JSX.Element => {
+export const AddTodo = ({ dispatch }: { dispatch: ThunkDispatch }): ReturnType<typeof AddTodo> => {
   let input
 
   return (
