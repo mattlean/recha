@@ -3,6 +3,7 @@ import React from 'react'
 import { DrawerAppContent } from '@material/react-drawer'
 import { TopAppBarFixedAdjust } from '@material/react-top-app-bar'
 
+import Content from './Content'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
@@ -11,11 +12,9 @@ const Page = ({ children }): ReturnType<typeof Page> => (
     <Topbar />
     <TopAppBarFixedAdjust>
       <Sidebar />
-      <DrawerAppContent className="content">
-        <div className="gutter">
-          <Card>{children}</Card>
-        </div>
-      </DrawerAppContent>
+      <Content>
+        <Card className="card-content">{children}</Card>
+      </Content>
     </TopAppBarFixedAdjust>
   </div>
 )
