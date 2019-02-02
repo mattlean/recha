@@ -25,9 +25,11 @@ module.exports = merge([
   parts.loadHTML({
     template: `${PATHS.src}/index.html`,
     templateParameters: {
-      csp: `<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval' http://${HOST}:${PORT} ws://${HOST}:${PORT} blob: data:">`
+      csp: `<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-eval' http://${HOST}:${PORT} ws://${HOST}:${PORT} blob: data:">-->`
     }
   }),
+
+  parts.loadStyles(),
 
   parts.genSourceMaps({ type: 'cheap-module-eval-source-map' })
 ])

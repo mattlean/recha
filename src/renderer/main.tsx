@@ -5,6 +5,7 @@ import { render } from 'react-dom'
 import Root from './containers/Root'
 import todos from './reducers'
 import { setupStore } from './util/store'
+import './main.scss'
 
 const root = document.getElementById('root')
 

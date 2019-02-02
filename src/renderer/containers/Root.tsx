@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React from 'react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'

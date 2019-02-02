@@ -138,7 +138,10 @@ exports.loadStyles = ({ exclude, include } = {}) => ({
           },
           {
             loader: 'sass-loader',
-            options: { sourceMap: true }
+            options: {
+              includePaths: ['node_modules'],
+              sourceMap: true
+            }
           }
         ],
         exclude,

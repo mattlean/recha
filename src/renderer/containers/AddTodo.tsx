@@ -1,4 +1,6 @@
-import React, { ReactNode } from 'react'
+import Button from '@material/react-button'
+import React from 'react'
+import TextField, { Input } from '@material/react-text-field'
 import { connect } from 'react-redux'
 
 import { addTodo } from '../actions'
@@ -9,22 +11,25 @@ export const AddTodo = ({ dispatch }: { dispatch: ThunkDispatch }): ReturnType<t
 
   return (
     <>
-      <input
-        ref={node => {
-          input = node
-        }}
-      />
-      <button
-        type="button"
+      <TextField label="Todo">
+        <input
+          ref={node => {
+            input = node
+          }}
+        />
+      </TextField>
+      <Button
+        raised
         onClick={() => {
           if (input) {
             dispatch(addTodo(input.value))
             input.value = ''
           }
         }}
+        className="button-alternate"
       >
         Add Todo
-      </button>
+      </Button>
     </>
   )
 }

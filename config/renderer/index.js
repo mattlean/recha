@@ -14,7 +14,11 @@ const commonConfig = merge([
     target: 'electron-renderer'
   },
 
-  parts.loadJS({ include: PATHS.src })
+  parts.loadJS({ include: PATHS.src }),
+
+  parts.loadImgs(),
+
+  parts.loadFonts()
 ])
 
 module.exports = mode => {

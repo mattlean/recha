@@ -1,3 +1,4 @@
+const glob = require('glob')
 const merge = require('webpack-merge')
 
 const parts = require('../common/parts')
@@ -19,6 +20,20 @@ module.exports = merge([
   }),
 
   parts.minJS(),
+
+  parts.minCSS({
+    options: {
+      discardComments: { removeAll: true },
+      safe: true
+    }
+  }),
+
+  parts.extractStyles({
+    filename: 'style.css',
+    use: ['css-loader', 'sass-loader', parts.autoprefix()]
+  }),
+
+  parts.purifyCSS({ paths: glob.sync(`${PATHS.renderer.src}/**/*.{js,jsx}`, { nodir: true }) }),
 
   parts.genSourceMaps({ type: 'source-map' })
 ])
