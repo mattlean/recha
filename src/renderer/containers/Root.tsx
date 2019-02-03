@@ -4,13 +4,13 @@ import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
 
-import App from '../components/App'
+import TodoListApp from '../components/TodoListApp'
 import { State, Actions } from '../types'
 
 const Root = ({ store }: { store: Store<State, Actions> }): ReturnType<typeof Root> => (
   <Provider store={store}>
     <Router>
-      <Route path="/:filter?" component={App} />
+      <Route path="/:filter?" component={TodoListApp} />
     </Router>
   </Provider>
 )
