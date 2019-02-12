@@ -1,0 +1,25 @@
+
+.todo-list-item > .mdc-text-field {
+  width: 100%;
+}
+
+.todo-list-item > .mdc-text-field > input {
+  padding: 0;
+}
+
+.todo-list-item-fns {
+  display: none;
+  outline: 0;
+}
+
+.todo-list-item-fns > i:first-child {
+  margin-right: 6px;
+}
+
+.todo-list-item:hover > .mdc-text-field > .todo-list-item-fns {
+  display: block;
+}
+
+.todo-list-drag-over .todo-list-item > .mdc-text-field > .todo-list-item-fns {
+  display: none;
+}

@@ -19,7 +19,13 @@ module.exports = merge([
   parts.setupDevServer({
     host: HOST,
     port: PORT,
-    hot: true
+    hot: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9001',
+        pathRewrite: { '^/api': '' }
+      }
+    }
   }),
 
   parts.loadHTML({

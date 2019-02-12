@@ -12,7 +12,7 @@ class Sidebar extends Component<{}, State> {
     selectedIndex: 1
   }
 
-  public render() {
+  public render(): JSX.Element {
     const { selectedIndex } = this.state
     return (
       <Drawer className="sidebar">
