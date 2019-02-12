@@ -6,8 +6,17 @@ import { State } from './reducers'
 export const FETCH_TODOS_REQ = 'FETCH_TODOS_REQUEST'
 export const FETCH_TODOS_FAILURE = 'FETCH_TODOS_FAILURE'
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS'
+export const SELECT_TODO = 'SELECT_TODO'
+export const SELECT_TODO_LIST = 'SELECT_TODO_LIST'
+export const UPDATE_TODO_NAME = 'UPDATE_TODO_NAME'
 
-export type Actions = ActionFetchTodosFailure | ActionFetchTodosReq | ActionFetchTodosSuccess
+export type Actions =
+  | ActionFetchTodosFailure
+  | ActionFetchTodosReq
+  | ActionFetchTodosSuccess
+  | ActionSelectTodo
+  | ActionSelectTodoList
+  | ActionUpdateTodoName
 
 export interface ActionFetchTodosFailure {
   type: typeof FETCH_TODOS_FAILURE
@@ -20,8 +29,23 @@ export interface ActionFetchTodosReq {
 
 export interface ActionFetchTodosSuccess {
   type: typeof FETCH_TODOS_SUCCESS
-  date: string
+  date: Todo['date']
   res: NormalizedTodosRes
+}
+
+export interface ActionSelectTodo {
+  type: typeof SELECT_TODO
+  todo: Todo
+}
+
+export interface ActionSelectTodoList {
+  type: typeof SELECT_TODO_LIST
+  date: Todo['date']
+}
+
+export interface ActionUpdateTodoName {
+  type: typeof UPDATE_TODO_NAME
+  name: Todo['name']
 }
 
 interface NormalizedBaseTodoRes {

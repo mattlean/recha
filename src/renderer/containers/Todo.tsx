@@ -1,20 +1,29 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import MaterialIcon from '@material/react-material-icon'
 import TextField, { Input } from '@material/react-text-field'
 import { Draggable } from 'react-beautiful-dnd'
 
-import Todo from '../types/Todo'
+import { ActionSelectTodo } from '../types/actions'
+import { default as TodoType } from '../types/Todo'
+import { selectTodo as acSelectTodo } from '../actions/todos'
 
-interface Props {
-  index: number
-  todo: Todo
+interface DispatchProps {
+  selectTodo: (todo: TodoType) => ActionSelectTodo
 }
+
+interface OwnProps {
+  index: number
+  todo: TodoType
+}
+
+type Props = DispatchProps & OwnProps
 
 interface State {
   value: string
 }
 
-class Todo2 extends Component<Props, State> {
+class Todo extends Component<Props, State> {
   public constructor(props) {
     super(props)
     const { name } = props.todo
@@ -31,6 +40,11 @@ class Todo2 extends Component<Props, State> {
 
   private handleChange = (evt): void => {
     this.setState({ value: evt.target.value })
+  }
+
+  private handleFocus = (): void => {
+    const { selectTodo, todo } = this.props
+    selectTodo(todo)
   }
 
   private applyStyles = (isDragging): string => {
@@ -63,14 +77,9 @@ class Todo2 extends Component<Props, State> {
                     className={this.applyStyles(snapshot.isDragging)}
                   />
                 }
-                trailingIcon={
-                  <div tabIndex={0} className="todo-list-item-fns">
-                    <MaterialIcon icon="edit" />
-                    <MaterialIcon icon="delete" className="util-cursor-pointer" />
-                  </div>
-                }
+                trailingIcon={<MaterialIcon icon="keyboard_arrow_right" />}
               >
-                <Input value={value} onChange={this.handleChange} />
+                <Input value={value} onChange={this.handleChange} onFocus={this.handleFocus} />
               </TextField>
             </div>
           </div>
@@ -81,4 +90,9 @@ class Todo2 extends Component<Props, State> {
   }
 }
 
-export default Todo2
+const mapDispatchToProps = { selectTodo: acSelectTodo }
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Todo)

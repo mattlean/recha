@@ -9,8 +9,8 @@ let win
 
 function createWindow(): void {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 800,
     show: false
   })
 

@@ -1,4 +1,8 @@
 
+#todo-list h1 {
+  font-size: 1.2rem;
+}
+
 .todo-list-item > .mdc-text-field {
   width: 100%;
 }
@@ -22,4 +26,16 @@
 
 .todo-list-drag-over .todo-list-item > .mdc-text-field > .todo-list-item-fns {
   display: none;
+}
+
+#todo-name {
+  margin-bottom: 10px;
+}
+
+#todo-name > input {
+  padding: 16px;
+}
+
+#todo-details > textarea {
+  min-height: 68vh;
 }

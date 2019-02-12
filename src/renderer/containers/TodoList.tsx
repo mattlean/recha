@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
-import Todo from '../types/Todo'
-import Todo2 from '../components/Todo2'
-import { fetchTodos as acFetchTodos } from '../actions/index2'
+import AddTodo from '../components/AddTodo'
+import Todo from './Todo'
+import { default as TodoType } from '../types/Todo'
+import { fetchTodos as acFetchTodos } from '../actions/todos'
 import { getTodoList } from '../reducers/todos'
 import { NormalizedTodosRes } from '../types/actions'
-import { State } from '../types/reducers'
+import { State as ReduxState } from '../types/reducers'
 
 interface DispatchProps {
   fetchTodos: (date: string) => Promise<NormalizedTodosRes>
@@ -15,17 +16,17 @@ interface DispatchProps {
 
 interface StateProps {
   date: string
-  todoList: Todo[]
+  reduxTodoList: TodoType[]
 }
 
 interface InnerListProps {
-  todoList: Todo[]
+  todoList: TodoType[]
 }
 
 type Props = StateProps & DispatchProps
 
 interface ComponentState {
-  uiTodoList: Todo[]
+  compTodoList: TodoType[]
 }
 
 class InnerList extends Component<InnerListProps> {
@@ -39,14 +40,14 @@ class InnerList extends Component<InnerListProps> {
 
   public render(): JSX.Element[] {
     const { todoList } = this.props
-    return todoList.map((todo, index) => <Todo2 key={todo.id} todo={todo} index={index} />)
+    return todoList.map((todo, index) => <Todo key={todo.id} todo={todo} index={index} />)
   }
 }
 
 // eslint-disable-next-line react/no-multi-comp
 class TodoList extends Component<Props, ComponentState> {
   public state = {
-    uiTodoList: []
+    compTodoList: []
   }
 
   public componentDidMount(): void {
@@ -55,9 +56,9 @@ class TodoList extends Component<Props, ComponentState> {
   }
 
   public componentDidUpdate(prevProps): void {
-    const { todoList } = this.props
-    if (prevProps.todoList !== todoList) {
-      this.setState({ uiTodoList: todoList }) // eslint-disable-line react/no-did-update-set-state
+    const { reduxTodoList } = this.props
+    if (prevProps.reduxTodoList !== reduxTodoList) {
+      this.setState({ compTodoList: reduxTodoList }) // eslint-disable-line react/no-did-update-set-state
     }
   }
 
@@ -71,31 +72,29 @@ class TodoList extends Component<Props, ComponentState> {
   }
 
   private onDragEnd = result => {
-    const { uiTodoList } = this.state
+    const { compTodoList } = this.state
     const { destination, source } = result
 
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
 
-    const newUITodoList = Array.from(uiTodoList)
+    const newUITodoList = Array.from(compTodoList)
     const [movedTodo] = newUITodoList.splice(source.index, 1)
     newUITodoList.splice(destination.index, 0, movedTodo)
 
-    this.setState({ uiTodoList: newUITodoList })
+    this.setState({ compTodoList: newUITodoList })
   }
 
   public render(): JSX.Element {
     const { date, fetchTodos } = this.props
-    const { uiTodoList } = this.state
+    const { compTodoList } = this.state
 
     let dndList
     if (date) {
       dndList = (
         <DragDropContext onDragEnd={this.onDragEnd}>
           <h1>{date}</h1>
-          <button type="button" onClick={() => fetchTodos('2019-02-03')}>
-            Refetch
-          </button>
+          <AddTodo />
           <Droppable droppableId={date}>
             {(provided, snapshot) => (
               <div
@@ -103,7 +102,7 @@ class TodoList extends Component<Props, ComponentState> {
                 {...provided.droppableProps}
                 className={this.applyStyles(snapshot.isDraggingOver)}
               >
-                <InnerList todoList={uiTodoList} />
+                <InnerList todoList={compTodoList} />
                 {provided.placeholder}
               </div>
             )}
@@ -118,9 +117,9 @@ class TodoList extends Component<Props, ComponentState> {
   }
 }
 
-const mapStateToProps = (state: State): StateProps => ({
+const mapStateToProps = (state: ReduxState): StateProps => ({
   date: state.todos.list.id as string,
-  todoList: getTodoList(state.todos)
+  reduxTodoList: getTodoList(state.todos)
 })
 
 const mapDispatchToProps = {

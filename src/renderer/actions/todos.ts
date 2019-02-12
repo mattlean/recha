@@ -8,9 +8,13 @@ import {
   ActionFetchTodosFailure,
   ActionFetchTodosReq,
   ActionFetchTodosSuccess,
+  ActionSelectTodo,
+  ActionUpdateTodoName,
   FETCH_TODOS_FAILURE,
   FETCH_TODOS_REQ,
   FETCH_TODOS_SUCCESS,
+  SELECT_TODO,
+  UPDATE_TODO_NAME,
   NormalizedTodosRes,
   ThunkDispatch,
   ThunkResult
@@ -26,7 +30,7 @@ export const fetchTodosReq = (): ActionFetchTodosReq => ({
   type: FETCH_TODOS_REQ
 })
 
-export const fetchTodosSuccess = (date: string, res: APIRes<Todo[]>): ActionFetchTodosSuccess => {
+export const fetchTodosSuccess = (date: Todo['date'], res: APIRes<Todo[]>): ActionFetchTodosSuccess => {
   return {
     type: FETCH_TODOS_SUCCESS,
     date,
@@ -34,7 +38,7 @@ export const fetchTodosSuccess = (date: string, res: APIRes<Todo[]>): ActionFetc
   }
 }
 
-export const fetchTodos = (date: string): ThunkResult<Promise<ActionFetchTodosFailure | NormalizedTodosRes>> => (
+export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<ActionFetchTodosFailure | NormalizedTodosRes>> => (
   dispatch: ThunkDispatch,
   getState: () => State
 ) => {
@@ -49,3 +53,13 @@ export const fetchTodos = (date: string): ThunkResult<Promise<ActionFetchTodosFa
     err => Promise.resolve(dispatch(fetchTodosFailure(err.message)))
   )
 }
+
+export const selectTodo = (todo: Todo): ActionSelectTodo => ({
+  type: SELECT_TODO,
+  todo
+})
+
+export const updateTodoName = (name: Todo['name']): ActionUpdateTodoName => ({
+  type: UPDATE_TODO_NAME,
+  name
+})

@@ -2,10 +2,11 @@ import { combineReducers } from 'redux'
 
 import byId, { getTodo } from './byId'
 import list from './list'
+import ui from './ui'
 import Todo from '../../types/Todo'
 import { StateTodos } from '../../types/reducers'
 
-const todos = combineReducers({ byId, list })
+const todos = combineReducers({ byId, list, ui })
 
 export default todos
 

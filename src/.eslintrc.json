@@ -18,6 +18,7 @@
         "@typescript-eslint/indent": 0,
         "@typescript-eslint/member-delimiter-style": 0,
         "@typescript-eslint/no-unused-vars": 0,
+        "import/no-named-default": 0,
         "indent": [
             "error",
             2,
