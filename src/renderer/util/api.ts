@@ -2,7 +2,7 @@ import fetch from 'cross-fetch'
 
 import HTTPErr from './HTTPErr'
 import Todo from '../types/Todo'
-import { APIRes } from '../types/index2'
+import { APIRes } from '../types'
 
 interface TodosQuery {
   col: 'id' | 'date' | 'order_num'

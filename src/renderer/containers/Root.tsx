@@ -6,7 +6,8 @@ import { Store } from 'redux'
 
 import TodoListApp from '../components/TodoListApp'
 import TodoLists from '../components/TodoLists'
-import { State, Actions } from '../types'
+import { Actions } from '../types/actions'
+import { State } from '../types/reducers'
 
 const Root = ({ store }: { store: Store<State, Actions> }): ReturnType<typeof Root> => (
   <Provider store={store}>

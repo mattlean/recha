@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { render } from 'react-dom'
 
 import Root from './containers/Root'
-import rootReducer from './reducers/index2'
+import rootReducer from './reducers'
 import { setupStore } from './util/store'
 import './main.scss'
 

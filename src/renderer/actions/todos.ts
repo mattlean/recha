@@ -1,7 +1,7 @@
 import { normalize } from 'normalizr'
 
 import Todo from '../types/Todo'
-import { APIRes } from '../types/index2'
+import { APIRes } from '../types'
 import { arrayOfTodos } from './schema'
 import { getTodos } from '../util/api'
 import {
