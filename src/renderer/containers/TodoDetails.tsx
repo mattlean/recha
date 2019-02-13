@@ -38,9 +38,13 @@ class TodoDetails extends Component<Props, ComponentState> {
 
   public componentDidUpdate(prevProps): void {
     const { todo } = this.props
-    if (prevProps.todo !== todo) {
-      this.setState({ details: todo.details }) // eslint-disable-line react/no-did-update-set-state
+    /* eslint-disable react/no-did-update-set-state */
+    if (prevProps.todo && !todo) {
+      this.setState({ details: '' })
+    } else if (prevProps.todo !== todo) {
+      this.setState({ details: todo.details })
     }
+    /* eslint-enable react/no-did-update-set-state */
   }
 
   private handleDetailsChange = (evt): void => {

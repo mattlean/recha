@@ -64,10 +64,12 @@ class TodoList extends Component<Props, ComponentState> {
   }
 
   public componentDidUpdate(prevProps): void {
-    const { fetchTodos } = this.props
+    const { fetchTodos, history } = this.props
     const { date } = this.props.match.params
-    if (prevProps.match.params.date !== date) {
+    if (date && prevProps.match.params.date !== date) {
       fetchTodos(date)
+    } else if (!date) {
+      history.push(`/${moment().format('YYYY-MM-DD')}`)
     }
 
     const { reduxTodoList } = this.props

@@ -17,8 +17,12 @@ export default class AddTodo extends Component<{}, State> {
 
   public render(): JSX.Element {
     const { value } = this.state
+
+    let carriageReturn
+    if (value) carriageReturn = <MaterialIcon icon="subdirectory_arrow_left" />
+
     return (
-      <TextField label="New Todo" leadingIcon={<MaterialIcon icon="add" />}>
+      <TextField label="New Todo" leadingIcon={<MaterialIcon icon="add" />} trailingIcon={carriageReturn}>
         <Input value={value} onChange={this.handleChange} />
       </TextField>
     )

@@ -16,6 +16,10 @@ body {
   margin: 0;
 }
 
+body a {
+  text-decoration: none;
+}
+
 .sidebar {
   position: fixed;
   height: 100vh;
