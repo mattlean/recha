@@ -9,12 +9,12 @@ import {
   ActionFetchTodosReq,
   ActionFetchTodosSuccess,
   ActionSelectTodo,
-  ActionUpdateTodoName,
+  ActionUpdateFormTodoName,
   FETCH_TODOS_FAILURE,
   FETCH_TODOS_REQ,
   FETCH_TODOS_SUCCESS,
   SELECT_TODO,
-  UPDATE_TODO_NAME,
+  UPDATE_FORM_TODO_NAME,
   NormalizedTodosRes,
   ThunkDispatch,
   ThunkResult
@@ -54,12 +54,14 @@ export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<ActionFetchT
   )
 }
 
-export const selectTodo = (todo: Todo): ActionSelectTodo => ({
+export const selectTodo = (id: Todo['id'], name: Todo['name']): ActionSelectTodo => ({
   type: SELECT_TODO,
-  todo
+  id,
+  name
 })
 
-export const updateTodoName = (name: Todo['name']): ActionUpdateTodoName => ({
-  type: UPDATE_TODO_NAME,
+export const updateFormTodoName = (id: Todo['id'], name: Todo['name']): ActionUpdateFormTodoName => ({
+  type: UPDATE_FORM_TODO_NAME,
+  id,
   name
 })

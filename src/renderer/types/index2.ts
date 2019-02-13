@@ -1,19 +1,8 @@
-import { TYPE as TODO_TYPE } from './Todo'
-
+/* eslint-disable import/prefer-default-export */
 /**
  * Interface for API response
  */
 export interface APIRes<T> {
   data: T
-  type: Types
+  type: string
 }
-
-/**
- * Constant API response type for errors
- */
-export const ERR_TYPE = 'Error'
-
-/**
- * All API response types
- */
-export type Types = typeof ERR_TYPE | typeof TODO_TYPE

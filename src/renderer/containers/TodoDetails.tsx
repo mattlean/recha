@@ -1,28 +1,32 @@
 import Card from '@material/react-card'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import TextField, { Input } from '@material/react-text-field'
 import Todo from '../types/Todo'
-import { ActionUpdateTodoName } from '../types/actions'
-import { updateTodoName as acUpdateTodoName } from '../actions/todos'
+import { ActionUpdateFormTodoName } from '../types/actions'
 import { getTodo } from '../reducers/todos/byId'
+import { getTodoName } from '../reducers/todos/formNameById'
 import { State as ReduxState } from '../types/reducers'
+import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
 
 interface DispatchProps {
-  updateTodoName: (name: Todo['name']) => ActionUpdateTodoName
+  updateFormTodoName: (id: Todo['id'], name: Todo['name']) => ActionUpdateFormTodoName
 }
 
 interface StateProps {
-  reduxTodoName: Todo['name']
+  formTodoName: Todo['name']
   todo: Todo
 }
+
+type OwnProps = RouteComponentProps<{ id: string }>
 
 interface ComponentState {
   details: Todo['details']
 }
 
-type Props = DispatchProps & StateProps
+type Props = DispatchProps & StateProps & OwnProps
 
 class TodoDetails extends Component<Props, ComponentState> {
   public constructor(props) {
@@ -44,19 +48,20 @@ class TodoDetails extends Component<Props, ComponentState> {
   }
 
   private handleNameChange = (evt): void => {
-    const { updateTodoName } = this.props
-    updateTodoName(evt.target.value)
+    const { todo, updateFormTodoName } = this.props
+    updateFormTodoName(todo.id, evt.target.value)
   }
 
   public render(): JSX.Element {
-    const { reduxTodoName, todo } = this.props
+    const { id } = this.props.match.params
+    const { formTodoName, todo } = this.props
 
-    if (todo) {
+    if (id && todo) {
       const { details } = this.state
       return (
         <Card className="card-content">
           <TextField id="todo-name" label={todo.name} fullWidth floatingLabelClassName="util-display-none">
-            <Input value={reduxTodoName} onChange={this.handleNameChange} />
+            <Input value={formTodoName} onChange={this.handleNameChange} />
           </TextField>
           <TextField id="todo-details" label={details} fullWidth textarea floatingLabelClassName="util-display-none">
             <Input value={details} onChange={this.handleDetailsChange} />
@@ -68,16 +73,21 @@ class TodoDetails extends Component<Props, ComponentState> {
   }
 }
 
-const mapStateToProps = (state: ReduxState): StateProps => ({
-  reduxTodoName: state.todos.ui.todoName,
-  todo: getTodo(state.todos.byId, String(state.todos.ui.currTodo))
-})
-
-const mapDispatchToProps = {
-  updateTodoName: acUpdateTodoName
+const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => {
+  const { id } = ownProps.match.params
+  return {
+    formTodoName: getTodoName(state.todos.formNameById, String(id)),
+    todo: getTodo(state.todos.byId, String(id))
+  }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TodoDetails)
+const mapDispatchToProps = {
+  updateFormTodoName: acUpdateFormTodoName
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TodoDetails)
+)

@@ -17,12 +17,6 @@ export interface StateList<T> {
 
 export interface StateTodos {
   byId: StateById<Todo>
+  formNameById: StateById<string>
   list: StateList<number>
-  ui: StateTodosUI
-}
-
-export interface StateTodosUI {
-  currTodo: Todo['id']
-  currTodoList: Todo['date']
-  todoName: Todo['name']
 }

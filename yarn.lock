@@ -1212,6 +1212,11 @@
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
   integrity sha512-ui3WwXmjTaY73fOQ3/m3nnajU/Orhi6cEu5rzX+BrAAJxa3eITXZ5ch9suPqtM03OWhAHhPSyBGCN4UKoxO20Q==
 
+"@types/jest@^24.0.1":
+  version "24.0.1"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-24.0.1.tgz#8945411140e7cdfd5ea76380e5f5fa7bf17646ea"
+  integrity sha512-4KNToPz5SAVa0GZrYAL3Q43p5MY/QBmYclYAmqPeqAmbgQ4lXkgKK0mYtr9S+N2Az0JvFaYJECztHZuFGhG3zw==
+
 "@types/node@*":
   version "10.12.11"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.11.tgz#715c476c99a5f6898a1ae61caf9825e43c03912e"
@@ -7292,6 +7297,11 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 moo@^0.4.3:
   version "0.4.3"

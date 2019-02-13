@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import AddTodo from '../components/AddTodo'
 import Todo from './Todo'
@@ -14,16 +16,17 @@ interface DispatchProps {
   fetchTodos: (date: string) => Promise<NormalizedTodosRes>
 }
 
+type OwnProps = RouteComponentProps<{ date: string; id: string }>
+
 interface StateProps {
-  date: string
   reduxTodoList: TodoType[]
 }
 
-interface InnerListProps {
-  todoList: TodoType[]
-}
+type Props = StateProps & DispatchProps & OwnProps
 
-type Props = StateProps & DispatchProps
+interface InnerListProps {
+  compTodoList: TodoType[]
+}
 
 interface ComponentState {
   compTodoList: TodoType[]
@@ -31,16 +34,16 @@ interface ComponentState {
 
 class InnerList extends Component<InnerListProps> {
   public shouldComponentUpdate(nextProps): boolean {
-    const { todoList } = this.props
-    if (nextProps.todoList === todoList) {
+    const { compTodoList } = this.props
+    if (nextProps.todoList === compTodoList) {
       return false
     }
     return true
   }
 
   public render(): JSX.Element[] {
-    const { todoList } = this.props
-    return todoList.map((todo, index) => <Todo key={todo.id} todo={todo} index={index} />)
+    const { compTodoList } = this.props
+    return compTodoList.map((todo, index) => <Todo key={todo.id} id={todo.id} index={index} />)
   }
 }
 
@@ -51,11 +54,22 @@ class TodoList extends Component<Props, ComponentState> {
   }
 
   public componentDidMount(): void {
-    const { fetchTodos } = this.props
-    fetchTodos('2019-02-03')
+    const { history, match, fetchTodos } = this.props
+    const { date } = match.params
+    if (!date) {
+      history.push(`/${moment().format('YYYY-MM-DD')}`)
+    } else {
+      fetchTodos(date)
+    }
   }
 
   public componentDidUpdate(prevProps): void {
+    const { fetchTodos } = this.props
+    const { date } = this.props.match.params
+    if (prevProps.match.params.date !== date) {
+      fetchTodos(date)
+    }
+
     const { reduxTodoList } = this.props
     if (prevProps.reduxTodoList !== reduxTodoList) {
       this.setState({ compTodoList: reduxTodoList }) // eslint-disable-line react/no-did-update-set-state
@@ -86,7 +100,7 @@ class TodoList extends Component<Props, ComponentState> {
   }
 
   public render(): JSX.Element {
-    const { date, fetchTodos } = this.props
+    const { date } = this.props.match.params
     const { compTodoList } = this.state
 
     let dndList
@@ -102,7 +116,7 @@ class TodoList extends Component<Props, ComponentState> {
                 {...provided.droppableProps}
                 className={this.applyStyles(snapshot.isDraggingOver)}
               >
-                <InnerList todoList={compTodoList} />
+                <InnerList compTodoList={compTodoList} />
                 {provided.placeholder}
               </div>
             )}
@@ -118,7 +132,6 @@ class TodoList extends Component<Props, ComponentState> {
 }
 
 const mapStateToProps = (state: ReduxState): StateProps => ({
-  date: state.todos.list.id as string,
   reduxTodoList: getTodoList(state.todos)
 })
 
@@ -126,7 +139,9 @@ const mapDispatchToProps = {
   fetchTodos: acFetchTodos
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TodoList)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TodoList)
+)

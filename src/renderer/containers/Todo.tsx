@@ -1,50 +1,48 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import MaterialIcon from '@material/react-material-icon'
+import React, { Component } from 'react'
 import TextField, { Input } from '@material/react-text-field'
+import { connect } from 'react-redux'
 import { Draggable } from 'react-beautiful-dnd'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import { ActionSelectTodo } from '../types/actions'
+import { ActionUpdateFormTodoName } from '../types/actions'
 import { default as TodoType } from '../types/Todo'
-import { selectTodo as acSelectTodo } from '../actions/todos'
+import { getTodo } from '../reducers/todos/byId'
+import { getTodoName } from '../reducers/todos/formNameById'
+import { State } from '../types/reducers'
+import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
 
 interface DispatchProps {
-  selectTodo: (todo: TodoType) => ActionSelectTodo
+  updateFormTodoName: (id: TodoType['id'], name: TodoType['name']) => ActionUpdateFormTodoName
 }
 
-interface OwnProps {
+interface OwnProps extends RouteComponentProps<{ id: string; date: string }> {
+  id: TodoType['id']
   index: number
+}
+
+interface StateProps {
+  formTodoName: TodoType['name']
   todo: TodoType
 }
 
-type Props = DispatchProps & OwnProps
-
-interface State {
-  value: string
-}
+type Props = StateProps & DispatchProps & OwnProps
 
 class Todo extends Component<Props, State> {
-  public constructor(props) {
-    super(props)
-    const { name } = props.todo
-
-    this.state = { value: name }
-  }
-
-  public componentDidUpdate(prevProps): void {
-    const { todo } = this.props
-    if (prevProps.todo !== todo) {
-      this.setState({ value: todo.name }) // eslint-disable-line react/no-did-update-set-state
-    }
-  }
-
   private handleChange = (evt): void => {
-    this.setState({ value: evt.target.value })
+    const { id, updateFormTodoName } = this.props
+    updateFormTodoName(id, evt.target.value)
   }
 
   private handleFocus = (): void => {
-    const { selectTodo, todo } = this.props
-    selectTodo(todo)
+    const { history, id } = this.props
+    const { date } = this.props.match.params
+
+    if (date) {
+      history.push({
+        pathname: `/${date}/${id}`
+      })
+    }
   }
 
   private applyStyles = (isDragging): string => {
@@ -57,9 +55,8 @@ class Todo extends Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { index, todo } = this.props
-    const id = String(todo.id)
-    const { value } = this.state
+    const { formTodoName, index } = this.props
+    const id = String(this.props.id)
 
     /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
     return (
@@ -79,7 +76,7 @@ class Todo extends Component<Props, State> {
                 }
                 trailingIcon={<MaterialIcon icon="keyboard_arrow_right" />}
               >
-                <Input value={value} onChange={this.handleChange} onFocus={this.handleFocus} />
+                <Input value={formTodoName} onChange={this.handleChange} onFocus={this.handleFocus} />
               </TextField>
             </div>
           </div>
@@ -90,9 +87,16 @@ class Todo extends Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = { selectTodo: acSelectTodo }
+const mapDispatchToProps = { updateFormTodoName: acUpdateFormTodoName }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Todo)
+const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => ({
+  formTodoName: getTodoName(state.todos.formNameById, String(ownProps.id)),
+  todo: getTodo(state.todos.byId, String(ownProps.id))
+})
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Todo)
+)

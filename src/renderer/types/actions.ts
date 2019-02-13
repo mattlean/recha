@@ -8,7 +8,7 @@ export const FETCH_TODOS_FAILURE = 'FETCH_TODOS_FAILURE'
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS'
 export const SELECT_TODO = 'SELECT_TODO'
 export const SELECT_TODO_LIST = 'SELECT_TODO_LIST'
-export const UPDATE_TODO_NAME = 'UPDATE_TODO_NAME'
+export const UPDATE_FORM_TODO_NAME = 'UPDATE_FORM_TODO_NAME'
 
 export type Actions =
   | ActionFetchTodosFailure
@@ -16,7 +16,7 @@ export type Actions =
   | ActionFetchTodosSuccess
   | ActionSelectTodo
   | ActionSelectTodoList
-  | ActionUpdateTodoName
+  | ActionUpdateFormTodoName
 
 export interface ActionFetchTodosFailure {
   type: typeof FETCH_TODOS_FAILURE
@@ -35,7 +35,8 @@ export interface ActionFetchTodosSuccess {
 
 export interface ActionSelectTodo {
   type: typeof SELECT_TODO
-  todo: Todo
+  id: Todo['id']
+  name: Todo['name']
 }
 
 export interface ActionSelectTodoList {
@@ -43,8 +44,9 @@ export interface ActionSelectTodoList {
   date: Todo['date']
 }
 
-export interface ActionUpdateTodoName {
-  type: typeof UPDATE_TODO_NAME
+export interface ActionUpdateFormTodoName {
+  type: typeof UPDATE_FORM_TODO_NAME
+  id: Todo['id']
   name: Todo['name']
 }
 
