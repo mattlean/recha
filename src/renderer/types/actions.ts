@@ -11,17 +11,11 @@ export const SELECT_TODO_LIST = 'SELECT_TODO_LIST'
 export const UPDATE_FORM_TODO_NAME = 'UPDATE_FORM_TODO_NAME'
 
 export type Actions =
-  | ActionFetchTodosFailure
   | ActionFetchTodosReq
   | ActionFetchTodosSuccess
   | ActionSelectTodo
   | ActionSelectTodoList
   | ActionUpdateFormTodoName
-
-export interface ActionFetchTodosFailure {
-  type: typeof FETCH_TODOS_FAILURE
-  message: string
-}
 
 export interface ActionFetchTodosReq {
   type: typeof FETCH_TODOS_REQ

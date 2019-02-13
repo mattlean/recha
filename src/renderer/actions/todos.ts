@@ -5,12 +5,10 @@ import { APIRes } from '../types'
 import { arrayOfTodos } from './schema'
 import { getTodos } from '../util/api'
 import {
-  ActionFetchTodosFailure,
   ActionFetchTodosReq,
   ActionFetchTodosSuccess,
   ActionSelectTodo,
   ActionUpdateFormTodoName,
-  FETCH_TODOS_FAILURE,
   FETCH_TODOS_REQ,
   FETCH_TODOS_SUCCESS,
   SELECT_TODO,
@@ -20,11 +18,6 @@ import {
   ThunkResult
 } from '../types/actions'
 import { State } from '../types/reducers'
-
-export const fetchTodosFailure = (message: string = 'Something went wrong.'): ActionFetchTodosFailure => ({
-  type: FETCH_TODOS_FAILURE,
-  message
-})
 
 export const fetchTodosReq = (): ActionFetchTodosReq => ({
   type: FETCH_TODOS_REQ
@@ -38,7 +31,7 @@ export const fetchTodosSuccess = (date: Todo['date'], res: APIRes<Todo[]>): Acti
   }
 }
 
-export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<ActionFetchTodosFailure | NormalizedTodosRes>> => (
+export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<NormalizedTodosRes>> => (
   dispatch: ThunkDispatch,
   getState: () => State
 ) => {
@@ -48,9 +41,8 @@ export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<ActionFetchT
 
   dispatch(fetchTodosReq())
 
-  return getTodos({ date, col: 'order_num', dir: 'ASC' }).then(
-    res => Promise.resolve(dispatch(fetchTodosSuccess(date, res)).res),
-    err => Promise.resolve(dispatch(fetchTodosFailure(err.message)))
+  return getTodos({ date, col: 'order_num', dir: 'ASC' }).then(res =>
+    Promise.resolve(dispatch(fetchTodosSuccess(date, res)).res)
   )
 }
 
