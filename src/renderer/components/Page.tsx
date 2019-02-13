@@ -1,5 +1,4 @@
 import React from 'react'
-import { DrawerAppContent } from '@material/react-drawer'
 import { TopAppBarFixedAdjust } from '@material/react-top-app-bar'
 
 import Content from './Content'

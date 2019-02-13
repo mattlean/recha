@@ -35,7 +35,7 @@ interface ComponentState {
 class InnerList extends Component<InnerListProps> {
   public shouldComponentUpdate(nextProps): boolean {
     const { compTodoList } = this.props
-    if (nextProps.todoList === compTodoList) {
+    if (nextProps.compTodoList === compTodoList) {
       return false
     }
     return true
@@ -106,30 +106,32 @@ class TodoList extends Component<Props, ComponentState> {
     const { compTodoList } = this.state
 
     let dndList
-    if (date) {
+    if (date && compTodoList.length > 0) {
       dndList = (
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          <h1>{date}</h1>
-          <AddTodo />
-          <Droppable droppableId={date}>
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className={this.applyStyles(snapshot.isDraggingOver)}
-              >
-                <InnerList compTodoList={compTodoList} />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <Droppable droppableId={date}>
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={this.applyStyles(snapshot.isDraggingOver)}
+            >
+              <InnerList compTodoList={compTodoList} />
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       )
     } else {
-      dndList = 'Empty List'
+      dndList = <i>No todos found...</i>
     }
 
-    return dndList
+    return (
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <h1>{date}</h1>
+        <AddTodo />
+        {dndList}
+      </DragDropContext>
+    )
   }
 }
 
