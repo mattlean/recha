@@ -1,9 +1,9 @@
 import { TYPE as TODO_TYPE } from '../../../types/Todo'
-import reducer, { defaultState } from '../formNameById'
+import reducer, { defaultState } from '../formNames'
 import { FETCH_TODOS_SUCCESS } from '../../../types/actions'
 import { fetchTodosSuccess } from '../../../actions/todos'
 
-describe('todos formNameById reducer', () => {
+describe('todos formNames reducer', () => {
   it('should return the initial state', () => {
     // @ts-ignore
     const state = reducer(undefined, {})

@@ -135,8 +135,8 @@ class TodoList extends Component<Props, ComponentState> {
   }
 }
 
-const mapStateToProps = (state: ReduxState): StateProps => ({
-  reduxTodoList: getTodoList(state.todos)
+const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => ({
+  reduxTodoList: getTodoList(state.todos, ownProps.match.params.date)
 })
 
 const mapDispatchToProps = {

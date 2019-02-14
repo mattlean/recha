@@ -10,7 +10,7 @@ export const defaultState = {}
 
 type Actions = ActionFetchTodosSuccess | ActionUpdateFormTodoName
 
-const formNameById = (state: StateById<string> = defaultState, action: Actions): StateById<string> => {
+const formNames = (state: StateById<string> = defaultState, action: Actions): StateById<string> => {
   switch (action.type) {
     case FETCH_TODOS_SUCCESS: {
       const newState = {}
@@ -34,6 +34,6 @@ const formNameById = (state: StateById<string> = defaultState, action: Actions):
   }
 }
 
-export default formNameById
+export default formNames
 
-export const getTodoName = (state: StateById<string>, id: string): string => state[id]
+export const getFormTodoName = (state: StateById<string>, id: string): string => state[id]

@@ -10,13 +10,8 @@ export interface StateById<T> {
   [key: string]: T
 }
 
-export interface StateList<T> {
-  id: number | string
-  items: T[]
-}
-
 export interface StateTodos {
   byId: StateById<Todo>
-  formNameById: StateById<string>
-  list: StateList<number>
+  formNames: StateById<string>
+  lists: StateById<string[]>
 }

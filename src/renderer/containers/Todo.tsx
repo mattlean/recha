@@ -7,8 +7,8 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { ActionUpdateFormTodoName } from '../types/actions'
 import { default as TodoType } from '../types/Todo'
+import { getFormTodoName } from '../reducers/todos/formNames'
 import { getTodo } from '../reducers/todos/byId'
-import { getTodoName } from '../reducers/todos/formNameById'
 import { State } from '../types/reducers'
 import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
 
@@ -90,7 +90,7 @@ class Todo extends Component<Props, State> {
 const mapDispatchToProps = { updateFormTodoName: acUpdateFormTodoName }
 
 const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => ({
-  formTodoName: getTodoName(state.todos.formNameById, String(ownProps.id)),
+  formTodoName: getFormTodoName(state.todos.formNames, String(ownProps.id)),
   todo: getTodo(state.todos.byId, String(ownProps.id))
 })
 
