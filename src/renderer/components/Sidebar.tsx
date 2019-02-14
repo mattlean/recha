@@ -30,7 +30,7 @@ class Sidebar extends Component<{}, State> {
                 <ListItemText primaryText="Today's Todos" />
               </ListItem>
             </Link>
-            <Link to="test">
+            <Link to="/lists">
               <ListItem onClick={() => this.handleClick(2)}>
                 <ListItemGraphic graphic={<MaterialIcon icon="date_range" />} />
                 <ListItemText primaryText="All Todos" />

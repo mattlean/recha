@@ -13,16 +13,23 @@ interface TodosQuery {
 
 const rootPath = '/api/v1'
 
-export const getTodos = (query?: Partial<TodosQuery>): Promise<APIRes<Todo[]>> => {
-  let path = `${rootPath}/todos`
+const pathTodos = `${rootPath}/todos`
 
+export const getTodos = (query?: Partial<TodosQuery>): Promise<APIRes<Todo[]>> => {
+  let newPathTodos = pathTodos
   if (query) {
     const queryString = new URLSearchParams(query).toString()
-    if (queryString) path += `?${queryString}`
+    if (queryString) newPathTodos += `?${queryString}`
   }
 
-  return fetch(path).then(res => {
+  return fetch(newPathTodos).then(res => {
     if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
     return res.json()
   })
 }
+
+export const getTodoLists = (): Promise<APIRes<string[]>> =>
+  fetch(`${pathTodos}/lists`).then(res => {
+    if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
+    return res.json()
+  })

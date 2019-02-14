@@ -15,7 +15,7 @@ const Root = ({ store }: { store: Store<State, Actions> }): JSX.Element => (
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/test" component={TodoLists} />
+          <Route exact path="/lists" component={TodoLists} />
           <Route path="/:date?/:id?" component={TodoListViewer} />
         </Switch>
       </Router>
