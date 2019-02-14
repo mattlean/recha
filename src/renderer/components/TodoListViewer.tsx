@@ -2,12 +2,12 @@ import Card from '@material/react-card'
 import React from 'react'
 import { Cell, Grid, Row } from '@material/react-layout-grid'
 
-import Page from './Page'
+import TodoListPage from './TodoListPage'
 import TodoDetails from '../containers/TodoDetails'
 import TodoList from '../containers/TodoList'
 
-const TodoListApp = (): JSX.Element => (
-  <Page>
+const TodoListViewer = (): JSX.Element => (
+  <TodoListPage>
     <Grid>
       <Row>
         <Cell columns={5}>
@@ -20,7 +20,7 @@ const TodoListApp = (): JSX.Element => (
         </Cell>
       </Row>
     </Grid>
-  </Page>
+  </TodoListPage>
 )
 
-export default TodoListApp
+export default TodoListViewer

@@ -1,6 +1,6 @@
+/* eslint-disable import/prefer-default-export */
 import { applyMiddleware, compose, createStore } from 'redux'
 
-// eslint-disable-next-line import/prefer-default-export
 export const setupStore = (
   reducer,
   preloadedState,

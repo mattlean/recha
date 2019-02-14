@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import fetch from 'cross-fetch'
 
 import HTTPErr from './HTTPErr'
@@ -12,7 +13,6 @@ interface TodosQuery {
 
 const rootPath = '/api/v1'
 
-// eslint-disable-next-line import/prefer-default-export
 export const getTodos = (query?: Partial<TodosQuery>): Promise<APIRes<Todo[]>> => {
   let path = `${rootPath}/todos`
 

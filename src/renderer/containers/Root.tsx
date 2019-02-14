@@ -4,20 +4,23 @@ import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
 
-import TodoListApp from '../components/TodoListApp'
+import Page from '../components/Page'
 import TodoLists from '../components/TodoLists'
+import TodoListViewer from '../components/TodoListViewer'
 import { Actions } from '../types/actions'
 import { State } from '../types/reducers'
 
-const Root = ({ store }: { store: Store<State, Actions> }): ReturnType<typeof Root> => (
-  <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route exact path="/test" component={TodoLists} />
-        <Route path="/:date?/:id?" component={TodoListApp} />
-      </Switch>
-    </Router>
-  </Provider>
+const Root = ({ store }: { store: Store<State, Actions> }): JSX.Element => (
+  <Page>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/test" component={TodoLists} />
+          <Route path="/:date?/:id?" component={TodoListViewer} />
+        </Switch>
+      </Router>
+    </Provider>
+  </Page>
 )
 
 export default hot(module)(Root)

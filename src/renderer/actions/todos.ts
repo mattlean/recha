@@ -35,10 +35,6 @@ export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<NormalizedTo
   dispatch: ThunkDispatch,
   getState: () => State
 ) => {
-  // if (getIsFetching(getState(), filter)) {
-  //   return Promise.resolve()
-  // }
-
   dispatch(fetchTodosReq())
 
   return getTodos({ date, col: 'order_num', dir: 'ASC' }).then(res =>
