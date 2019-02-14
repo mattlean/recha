@@ -33,10 +33,7 @@
         ],
         "no-shadow": 1,
         "no-underscore-dangle": 0,
-        "quotes": [
-            "warn",
-            "single"
-        ],
+        "quotes": 0,
         "semi": [
             "error",
             "never"
