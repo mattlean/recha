@@ -22,7 +22,13 @@ export default class AddTodo extends Component<{}, State> {
     if (value) carriageReturn = <MaterialIcon icon="subdirectory_arrow_left" />
 
     return (
-      <TextField label="New Todo" leadingIcon={<MaterialIcon icon="add" />} trailingIcon={carriageReturn}>
+      <TextField
+        label="New Todo"
+        leadingIcon={<MaterialIcon icon="add" id="add-todo-plus" />}
+        trailingIcon={carriageReturn}
+        floatingLabelClassName="add-todo-label"
+        id="add-todo"
+      >
         <Input value={value} onChange={this.handleChange} />
       </TextField>
     )

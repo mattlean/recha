@@ -3,29 +3,66 @@
   font-size: 1.2rem;
 }
 
-.todo-list-item > .mdc-text-field {
+#add-todo > input {
+  padding-left: 70px !important;
+}
+
+#add-todo > .add-todo-label {
+  left: 70px;
+}
+
+#add-todo > #add-todo-plus {
+  left: 30px;
+}
+
+.todo-list-item {
   width: 100%;
 }
 
-.todo-list-item > .mdc-text-field > input {
-  padding: 0;
+.todo-list-item > input {
+  padding-top: 0;
+  padding-right: 40px !important;
+  padding-bottom: 0;
+  padding-left: 70px !important;
 }
 
-.todo-list-item-fns {
+.todo-list-item-label {
   display: none;
+}
+
+.todo-list-item-ctrls {
+  top: 14px;
+  left: 6px !important;
   outline: 0;
 }
 
-.todo-list-item-fns > i:first-child {
-  margin-right: 6px;
-}
-
-.todo-list-item:hover > .mdc-text-field > .todo-list-item-fns {
-  display: block;
-}
-
-.todo-list-drag-over .todo-list-item > .mdc-text-field > .todo-list-item-fns {
+.todo-list-item > .todo-list-item-ctrls > .todo-list-item-handle {
   display: none;
+}
+
+.todo-list-item > .todo-list-item-ctrls > .todo-list-item-checkbox {
+  margin-left: 24px;
+}
+
+.todo-list-item:hover > .todo-list-item-ctrls > .todo-list-item-handle {
+  display: inline;
+}
+
+.todo-list-item:hover > .todo-list-item-ctrls > .todo-list-item-checkbox {
+  margin-left: 0;
+}
+
+.todo-list-dragover .todo-list-item > .todo-list-item-ctrls > .todo-list-item-handle,
+.todo-list-dragover .todo-list-item > .todo-list-item-ctrls > .todo-list-item-checkbox {
+  display: none;
+}
+
+.todo-list-item-handle.todo-list-item-handle-dragging {
+  display: inline !important;
+}
+
+.todo-list-item-arrow {
+  right: 6px !important;
 }
 
 #todo-name {

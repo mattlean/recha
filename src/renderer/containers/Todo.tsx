@@ -45,10 +45,10 @@ class Todo extends Component<Props, State> {
     }
   }
 
-  private applyStyles = (isDragging): string => {
-    let styles = 'todo-list-item-fns util-cursor-grab'
+  private applyHandleStyles = (isDragging): string => {
+    let styles = 'todo-list-item-handle'
     if (isDragging) {
-      styles += ' util-display-block'
+      styles += ' todo-list-item-handle-dragging'
       return styles
     }
     return styles
@@ -63,22 +63,24 @@ class Todo extends Component<Props, State> {
       <Draggable draggableId={id} index={index}>
         {(provided, snapshot) => (
           <div ref={provided.innerRef} {...provided.draggableProps}>
-            <div className="todo-list-item">
-              <TextField
-                label={id}
-                floatingLabelClassName="util-display-none"
-                leadingIcon={
+            <TextField
+              label={id}
+              leadingIcon={
+                <div className="todo-list-item-ctrls" tabIndex={0}>
                   <MaterialIcon
                     icon="drag_indicator"
                     {...provided.dragHandleProps}
-                    className={this.applyStyles(snapshot.isDragging)}
+                    className={this.applyHandleStyles(snapshot.isDragging)}
                   />
-                }
-                trailingIcon={<MaterialIcon icon="keyboard_arrow_right" />}
-              >
-                <Input value={formTodoName} onChange={this.handleChange} onFocus={this.handleFocus} />
-              </TextField>
-            </div>
+                  <MaterialIcon icon="check_box_outline_blank" className="todo-list-item-checkbox" />
+                </div>
+              }
+              trailingIcon={<MaterialIcon icon="keyboard_arrow_right" className="todo-list-item-arrow" />}
+              floatingLabelClassName="todo-list-item-label"
+              className="todo-list-item"
+            >
+              <Input value={formTodoName} onChange={this.handleChange} onFocus={this.handleFocus} />
+            </TextField>
           </div>
         )}
       </Draggable>

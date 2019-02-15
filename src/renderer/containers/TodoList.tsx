@@ -79,12 +79,10 @@ class TodoList extends Component<Props, ComponentState> {
   }
 
   private applyStyles = isDraggingOver => {
-    let styles = ''
     if (isDraggingOver) {
-      styles += 'todo-list-drag-over'
-      return styles
+      return 'todo-list-dragover'
     }
-    return styles
+    return ''
   }
 
   private onDragEnd = result => {
