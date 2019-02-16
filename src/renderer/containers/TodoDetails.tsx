@@ -5,10 +5,9 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import TextField, { Input } from '@material/react-text-field'
 import Todo from '../types/Todo'
-import { ActionUpdateFormTodoName } from '../types/actions'
-import { getFormTodoName } from '../reducers/todos/formNames'
-import { getTodo } from '../reducers/todos/byId'
-import { State as ReduxState } from '../types/reducers'
+import { ActionUpdateFormTodoName } from '../actions/types'
+import { getFormTodoName, getTodo } from '../selectors'
+import { State as ReduxState } from '../reducers/types'
 import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
 
 interface DispatchProps {
@@ -33,7 +32,13 @@ class TodoDetails extends Component<Props, ComponentState> {
     super(props)
 
     // Component state manages details. Redux state manages name because it is shared with Todo container.
-    this.state = { details: props.todo || '' }
+    let details
+    if (props.todo && props.todo.details) {
+      details = props.todo.details
+    } else {
+      details = ''
+    }
+    this.state = { details }
   }
 
   public componentDidUpdate(prevProps): void {
@@ -42,7 +47,13 @@ class TodoDetails extends Component<Props, ComponentState> {
     if (prevProps.todo && !todo) {
       this.setState({ details: '' })
     } else if (prevProps.todo !== todo) {
-      this.setState({ details: todo.details })
+      let details
+      if (todo && todo.details) {
+        details = todo.details
+      } else {
+        details = ''
+      }
+      this.setState({ details })
     }
     /* eslint-enable react/no-did-update-set-state */
   }
@@ -80,8 +91,8 @@ class TodoDetails extends Component<Props, ComponentState> {
 const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => {
   const { id } = ownProps.match.params
   return {
-    formTodoName: getFormTodoName(state.todos.formNames, String(id)),
-    todo: getTodo(state.todos.byId, String(id))
+    formTodoName: getFormTodoName(state.todos.form.names, String(id)),
+    todo: getTodo(state.todos.api, String(id))
   }
 }
 

@@ -3,14 +3,14 @@ import {
   ActionUpdateFormTodoName,
   FETCH_TODOS_SUCCESS,
   UPDATE_FORM_TODO_NAME
-} from '../../types/actions'
-import { StateById } from '../../types/reducers'
+} from '../../actions/types'
+import { StateById } from '../types'
 
 export const defaultState = {}
 
 type Actions = ActionFetchTodosSuccess | ActionUpdateFormTodoName
 
-const formNames = (state: StateById<string> = defaultState, action: Actions): StateById<string> => {
+const names = (state: StateById<string> = defaultState, action: Actions): StateById<string> => {
   switch (action.type) {
     case FETCH_TODOS_SUCCESS: {
       const newState = {}
@@ -34,6 +34,4 @@ const formNames = (state: StateById<string> = defaultState, action: Actions): St
   }
 }
 
-export default formNames
-
-export const getFormTodoName = (state: StateById<string>, id: string): string => state[id]
+export default names

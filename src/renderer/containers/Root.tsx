@@ -7,8 +7,8 @@ import { Store } from 'redux'
 import Page from '../components/Page'
 import TodoLists from '../components/TodoLists'
 import TodoListViewer from '../components/TodoListViewer'
-import { Actions } from '../types/actions'
-import { State } from '../types/reducers'
+import { Actions } from '../actions/types'
+import { State } from '../reducers/types'
 
 const Root = ({ store }: { store: Store<State, Actions> }): JSX.Element => (
   <Page>

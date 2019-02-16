@@ -1,8 +1,8 @@
-import { StateTodos } from '../../types/reducers'
+import { StateTodosAPI } from '../types'
 
-import { ActionFetchTodosSuccess, FETCH_TODOS_SUCCESS } from '../../types/actions'
+import { ActionFetchTodosSuccess, FETCH_TODOS_SUCCESS } from '../../actions/types'
 
-type State = StateTodos['lists'] | {}
+type State = StateTodosAPI['lists'] | {}
 
 const defaultState = {}
 

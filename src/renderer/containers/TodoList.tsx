@@ -8,9 +8,9 @@ import AddTodo from '../components/AddTodo'
 import Todo from './Todo'
 import { default as TodoType } from '../types/Todo'
 import { fetchTodos as acFetchTodos } from '../actions/todos'
-import { getTodoList } from '../reducers/todos'
-import { NormalizedTodosRes } from '../types/actions'
-import { State as ReduxState } from '../types/reducers'
+import { rsGetTodoList } from '../selectors'
+import { NormalizedTodosRes } from '../actions/types'
+import { State as ReduxState } from '../reducers/types'
 
 interface DispatchProps {
   fetchTodos: (date: string) => Promise<NormalizedTodosRes>
@@ -134,7 +134,7 @@ class TodoList extends Component<Props, ComponentState> {
 }
 
 const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => ({
-  reduxTodoList: getTodoList(state.todos, ownProps.match.params.date)
+  reduxTodoList: rsGetTodoList(state.todos.api, ownProps.match.params.date)
 })
 
 const mapDispatchToProps = {

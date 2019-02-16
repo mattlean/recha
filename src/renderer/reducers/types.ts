@@ -1,4 +1,4 @@
-import Todo from './Todo'
+import Todo from '../types/Todo'
 
 export type getState = () => State
 
@@ -11,7 +11,15 @@ export interface StateById<T> {
 }
 
 export interface StateTodos {
+  api: StateTodosAPI
+  form: StateTodosForm
+}
+
+export interface StateTodosAPI {
   byId: StateById<Todo>
-  formNames: StateById<string>
   lists: StateById<string[]>
+}
+
+export interface StateTodosForm {
+  names: StateById<string>
 }

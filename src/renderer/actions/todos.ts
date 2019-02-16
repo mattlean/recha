@@ -16,8 +16,8 @@ import {
   NormalizedTodosRes,
   ThunkDispatch,
   ThunkResult
-} from '../types/actions'
-import { State } from '../types/reducers'
+} from './types'
+import { State } from '../reducers/types'
 
 export const fetchTodosReq = (): ActionFetchTodosReq => ({
   type: FETCH_TODOS_REQ

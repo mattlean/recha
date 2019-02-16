@@ -1,7 +1,7 @@
 import { ThunkAction, ThunkDispatch as ReduxThunkDispatch } from 'redux-thunk'
 
-import Todo from './Todo'
-import { State } from './reducers'
+import Todo from '../types/Todo'
+import { State } from '../reducers/types'
 
 export const FETCH_TODOS_REQ = 'FETCH_TODOS_REQUEST'
 export const FETCH_TODOS_FAILURE = 'FETCH_TODOS_FAILURE'

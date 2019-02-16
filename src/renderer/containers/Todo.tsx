@@ -5,11 +5,10 @@ import { connect } from 'react-redux'
 import { Draggable } from 'react-beautiful-dnd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import { ActionUpdateFormTodoName } from '../types/actions'
+import { ActionUpdateFormTodoName } from '../actions/types'
 import { default as TodoType } from '../types/Todo'
-import { getFormTodoName } from '../reducers/todos/formNames'
-import { getTodo } from '../reducers/todos/byId'
-import { State } from '../types/reducers'
+import { getFormTodoName, getTodo } from '../selectors'
+import { State } from '../reducers/types'
 import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
 
 interface DispatchProps {
@@ -92,8 +91,8 @@ class Todo extends Component<Props, State> {
 const mapDispatchToProps = { updateFormTodoName: acUpdateFormTodoName }
 
 const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => ({
-  formTodoName: getFormTodoName(state.todos.formNames, String(ownProps.id)),
-  todo: getTodo(state.todos.byId, String(ownProps.id))
+  formTodoName: getFormTodoName(state.todos.form.names, String(ownProps.id)),
+  todo: getTodo(state.todos.api, String(ownProps.id))
 })
 
 export default withRouter(

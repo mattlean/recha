@@ -1,7 +1,7 @@
 import Todo from '../../types/Todo'
-import { StateById } from '../../types/reducers'
+import { StateById } from '../types'
 
-import { ActionFetchTodosSuccess, FETCH_TODOS_SUCCESS } from '../../types/actions'
+import { ActionFetchTodosSuccess, FETCH_TODOS_SUCCESS } from '../../actions/types'
 
 const defaultState = {}
 
@@ -18,5 +18,3 @@ const byId = (state: StateById<Todo> = defaultState, action: ActionFetchTodosSuc
 }
 
 export default byId
-
-export const getTodo = (state: StateById<Todo>, id: string): Todo => state[id]
