@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import Todo from '../types/Todo'
 import { NormalizedTodoRes } from '../actions/types'
+import { readTodo } from '../selectors'
+import { State } from '../reducers/types'
 import { updateTodo as acUpdateTodo } from '../actions/todos'
 
 interface DispatchProps {
@@ -16,22 +18,36 @@ interface OwnProps {
   completed_at?: string
 }
 
-interface State {
+interface StateProps {
+  reduxTodo: Todo
+}
+
+interface ComponentState {
   checked: boolean
 }
 
-type Props = DispatchProps & OwnProps
+type Props = DispatchProps & StateProps & OwnProps
 
-// TODO: load Todo from Redux store & update when new Todo is downloaded
-
-class TodoCheckbox extends Component<Props, State> {
+class TodoCheckbox extends Component<Props, ComponentState> {
   public constructor(props) {
     super(props)
     const { completed_at } = this.props
 
-    const checked = completed_at ? true : false // eslint-disable-line no-unneeded-ternary
+    const checked = this.isChecked(completed_at) // eslint-disable-line no-unneeded-ternary
 
     this.state = { checked }
+  }
+
+  public componentDidUpdate(prevProps): void {
+    const { reduxTodo } = this.props
+    if (prevProps.reduxTodo !== reduxTodo) {
+      this.setState({ checked: this.isChecked(reduxTodo.completed_at) }) // eslint-disable-line react/no-did-update-set-state
+    }
+  }
+
+  private isChecked = (completed_at: string) => {
+    if (completed_at) return true
+    return false
   }
 
   private handleClick = () => {
@@ -41,7 +57,6 @@ class TodoCheckbox extends Component<Props, State> {
     const data: Partial<Todo> = {}
     if (checked) {
       data.completed_at = null
-      updateTodo(id, data)
     } else {
       data.completed_at = moment()
         .utc()
@@ -58,11 +73,18 @@ class TodoCheckbox extends Component<Props, State> {
   }
 }
 
+const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => {
+  const id = String(ownProps.id)
+  return {
+    reduxTodo: readTodo(state.todos.api, id)
+  }
+}
+
 const mapDispatchToProps = {
   updateTodo: acUpdateTodo
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(TodoCheckbox)

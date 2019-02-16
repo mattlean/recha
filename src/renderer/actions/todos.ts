@@ -5,37 +5,41 @@ import { APIRes } from '../types'
 import { todoSchema, todoArraySchema } from '../util/schema'
 import { getTodos, patchTodo } from '../util/api/todos'
 import {
-  ActionFetchTodosReq,
   ActionFetchTodosSuccess,
   ActionSelectTodo,
+  ActionStartTodosReq,
   ActionUpdateFormTodoName,
   ActionUpdateTodoSuccess,
-  FETCH_TODOS_REQ,
   FETCH_TODOS_SUCCESS,
-  SELECT_TODO,
-  UPDATE_FORM_TODO_NAME,
-  UPDATE_TODO_SUCCESS,
+  Initiator,
   NormalizedTodoRes,
   NormalizedTodosRes,
+  SELECT_TODO,
+  START_TODOS_REQ,
   ThunkDispatch,
-  ThunkResult
+  ThunkResult,
+  UPDATE_FORM_TODO_NAME,
+  UPDATE_TODO_SUCCESS
 } from './types'
 import { State } from '../reducers/types'
 
-export const fetchTodosReq = (): ActionFetchTodosReq => ({
-  type: FETCH_TODOS_REQ
-})
+export function fetchTodosSuccess(date: Todo['date'], res: APIRes<Todo[]>): ActionFetchTodosSuccess {
+  return {
+    type: FETCH_TODOS_SUCCESS,
+    date,
+    res: normalize(res.data, todoArraySchema)
+  }
+}
 
-export const fetchTodosSuccess = (date: Todo['date'], res: APIRes<Todo[]>): ActionFetchTodosSuccess => ({
-  type: FETCH_TODOS_SUCCESS,
-  date,
-  res: normalize(res.data, todoArraySchema)
+export const startTodosReq = (initiator: Initiator): ActionStartTodosReq => ({
+  type: START_TODOS_REQ,
+  initiator
 })
 
 export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<NormalizedTodosRes>> => (
   dispatch: ThunkDispatch
 ) => {
-  dispatch(fetchTodosReq())
+  dispatch(startTodosReq('fetchTodos' as Initiator))
 
   return getTodos({ date, col: 'order_num', dir: 'ASC' }).then(res =>
     Promise.resolve(dispatch(fetchTodosSuccess(date, res)).res)
@@ -50,7 +54,7 @@ export const updateTodoSuccess = (res: APIRes<Todo>): ActionUpdateTodoSuccess =>
 export const updateTodo = (id: Todo['id'], data: Partial<Todo>): ThunkResult<Promise<NormalizedTodoRes>> => (
   dispatch: ThunkDispatch
 ) => {
-  dispatch(fetchTodosReq())
+  dispatch(startTodosReq('updateTodo' as Initiator))
 
   return patchTodo(id, data).then(res => Promise.resolve(dispatch(updateTodoSuccess(res)).res))
 }

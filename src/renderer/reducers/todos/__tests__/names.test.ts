@@ -1,7 +1,8 @@
-import { TYPE as TODO_TYPE } from '../../../types/Todo'
 import reducer, { defaultState } from '../names'
+import { APITypes } from '../../../types'
 import { FETCH_TODOS_SUCCESS } from '../../../actions/types'
 import { fetchTodosSuccess } from '../../../actions/todos'
+import { TYPE as TODO_TYPE } from '../../../types/Todo'
 
 describe('todos names reducer', () => {
   it('should return the initial state', () => {
@@ -42,7 +43,7 @@ describe('todos names reducer', () => {
           created_at: '2019-02-09T11:06:24.979Z'
         }
       ],
-      type: TODO_TYPE
+      type: TODO_TYPE as APITypes
     }
     const action = fetchTodosSuccess('2019-02-03', res)
     const state = reducer(defaultState, action)
