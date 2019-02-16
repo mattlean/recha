@@ -6,7 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import TextField, { Input } from '@material/react-text-field'
 import Todo from '../types/Todo'
 import { ActionUpdateFormTodoName } from '../actions/types'
-import { getFormTodoName, getTodo } from '../selectors'
+import { readFormTodoName, readTodo } from '../selectors'
 import { State as ReduxState } from '../reducers/types'
 import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
 
@@ -91,8 +91,8 @@ class TodoDetails extends Component<Props, ComponentState> {
 const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => {
   const { id } = ownProps.match.params
   return {
-    formTodoName: getFormTodoName(state.todos.form.names, String(id)),
-    todo: getTodo(state.todos.api, String(id))
+    formTodoName: readFormTodoName(state.todos.form.names, String(id)),
+    todo: readTodo(state.todos.api, String(id))
   }
 }
 

@@ -6,7 +6,7 @@ import { Cell, Grid, Row } from '@material/react-layout-grid'
 import { Link } from 'react-router-dom'
 
 import TodoListPage from './TodoListPage'
-import { getTodoLists } from '../util/api'
+import { getTodoLists } from '../util/api/todos'
 
 interface State {
   todoLists: string[]

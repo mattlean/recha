@@ -9,6 +9,7 @@ export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS'
 export const SELECT_TODO = 'SELECT_TODO'
 export const SELECT_TODO_LIST = 'SELECT_TODO_LIST'
 export const UPDATE_FORM_TODO_NAME = 'UPDATE_FORM_TODO_NAME'
+export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
 
 export type Actions =
   | ActionFetchTodosReq
@@ -16,6 +17,7 @@ export type Actions =
   | ActionSelectTodo
   | ActionSelectTodoList
   | ActionUpdateFormTodoName
+  | ActionUpdateTodoSuccess
 
 export interface ActionFetchTodosReq {
   type: typeof FETCH_TODOS_REQ
@@ -42,6 +44,11 @@ export interface ActionUpdateFormTodoName {
   type: typeof UPDATE_FORM_TODO_NAME
   id: Todo['id']
   name: Todo['name']
+}
+
+export interface ActionUpdateTodoSuccess {
+  type: typeof UPDATE_TODO_SUCCESS
+  res: NormalizedTodoRes
 }
 
 interface NormalizedBaseTodoRes {

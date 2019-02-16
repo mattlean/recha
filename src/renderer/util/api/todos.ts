@@ -1,9 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 import fetch from 'cross-fetch'
 
-import HTTPErr from './HTTPErr'
-import Todo from '../types/Todo'
-import { APIRes } from '../types'
+import HTTPErr from '../HTTPErr'
+import Todo from '../../types/Todo'
+import { APIRes } from '../../types'
+import { genReqOptions, ROOT_PATH } from '.'
 
 interface TodosQuery {
   col: 'id' | 'date' | 'order_num'
@@ -11,9 +12,7 @@ interface TodosQuery {
   dir: 'ASC' | 'asc' | 'DESC' | 'desc'
 }
 
-const rootPath = '/api/v1'
-
-const pathTodos = `${rootPath}/todos`
+const pathTodos = `${ROOT_PATH}/todos`
 
 export const getTodos = (query?: Partial<TodosQuery>): Promise<APIRes<Todo[]>> => {
   let newPathTodos = pathTodos
@@ -30,6 +29,13 @@ export const getTodos = (query?: Partial<TodosQuery>): Promise<APIRes<Todo[]>> =
 
 export const getTodoLists = (): Promise<APIRes<string[]>> =>
   fetch(`${pathTodos}/lists`).then(res => {
+    if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
+    return res.json()
+  })
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const patchTodo = (id: number, data: any): Promise<APIRes<Todo>> =>
+  fetch(`${pathTodos}/${id}`, genReqOptions('PATCH', data)).then(res => {
     if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
     return res.json()
   })

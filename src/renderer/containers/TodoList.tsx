@@ -43,7 +43,7 @@ class InnerList extends Component<InnerListProps> {
 
   public render(): JSX.Element[] {
     const { compTodoList } = this.props
-    return compTodoList.map((todo, index) => <Todo key={todo.id} id={todo.id} index={index} />)
+    return compTodoList.map((todo, index) => <Todo key={todo.id} todo={todo} index={index} />)
   }
 }
 

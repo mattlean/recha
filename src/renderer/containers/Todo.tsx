@@ -5,9 +5,10 @@ import { connect } from 'react-redux'
 import { Draggable } from 'react-beautiful-dnd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
+import TodoCheckbox from './TodoCheckbox'
 import { ActionUpdateFormTodoName } from '../actions/types'
 import { default as TodoType } from '../types/Todo'
-import { getFormTodoName, getTodo } from '../selectors'
+import { readFormTodoName, readTodo } from '../selectors'
 import { State } from '../reducers/types'
 import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
 
@@ -16,8 +17,8 @@ interface DispatchProps {
 }
 
 interface OwnProps extends RouteComponentProps<{ id: string; date: string }> {
-  id: TodoType['id']
   index: number
+  todo: TodoType
 }
 
 interface StateProps {
@@ -29,22 +30,22 @@ type Props = StateProps & DispatchProps & OwnProps
 
 class Todo extends Component<Props, State> {
   private handleChange = (evt): void => {
-    const { id, updateFormTodoName } = this.props
-    updateFormTodoName(id, evt.target.value)
+    const { todo, updateFormTodoName } = this.props
+    updateFormTodoName(todo.id, evt.target.value)
   }
 
   private handleFocus = (): void => {
-    const { history, id } = this.props
+    const { history, todo } = this.props
     const { date } = this.props.match.params
 
     if (date) {
       history.push({
-        pathname: `/${date}/${id}`
+        pathname: `/${date}/${todo.id}`
       })
     }
   }
 
-  private applyHandleStyles = (isDragging): string => {
+  private applyStyle = (isDragging): string => {
     let styles = 'todo-list-item-handle'
     if (isDragging) {
       styles += ' todo-list-item-handle-dragging'
@@ -55,23 +56,23 @@ class Todo extends Component<Props, State> {
 
   public render(): JSX.Element {
     const { formTodoName, index } = this.props
-    const id = String(this.props.id)
+    const { completed_at, id } = this.props.todo
 
     /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
     return (
-      <Draggable draggableId={id} index={index}>
+      <Draggable draggableId={String(id)} index={index}>
         {(provided, snapshot) => (
           <div ref={provided.innerRef} {...provided.draggableProps}>
             <TextField
-              label={id}
+              label={String(id)}
               leadingIcon={
                 <div className="todo-list-item-ctrls" tabIndex={0}>
                   <MaterialIcon
                     icon="drag_indicator"
                     {...provided.dragHandleProps}
-                    className={this.applyHandleStyles(snapshot.isDragging)}
+                    className={this.applyStyle(snapshot.isDragging)}
                   />
-                  <MaterialIcon icon="check_box_outline_blank" className="todo-list-item-checkbox" />
+                  <TodoCheckbox id={id} completed_at={completed_at} />
                 </div>
               }
               trailingIcon={<MaterialIcon icon="keyboard_arrow_right" className="todo-list-item-arrow" />}
@@ -90,10 +91,13 @@ class Todo extends Component<Props, State> {
 
 const mapDispatchToProps = { updateFormTodoName: acUpdateFormTodoName }
 
-const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => ({
-  formTodoName: getFormTodoName(state.todos.form.names, String(ownProps.id)),
-  todo: getTodo(state.todos.api, String(ownProps.id))
-})
+const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => {
+  const id = String(ownProps.todo.id)
+  return {
+    formTodoName: readFormTodoName(state.todos.form.names, id),
+    todo: readTodo(state.todos.api, id)
+  }
+}
 
 export default withRouter(
   connect(
