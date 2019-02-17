@@ -30,7 +30,20 @@ module.exports = merge([
 
   parts.extractStyles({
     filename: 'style.css',
-    use: ['css-loader', 'sass-loader', parts.autoprefix()]
+    use: [
+      {
+        loader: 'css-loader',
+        options: { sourceMap: true }
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          includePaths: ['node_modules'],
+          sourceMap: true
+        }
+      },
+      parts.autoprefix()
+    ]
   }),
 
   parts.purifyCSS({ paths: glob.sync(`${PATHS.renderer.src}/**/*.{js,jsx}`, { nodir: true }) }),

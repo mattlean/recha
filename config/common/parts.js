@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const PurifyCSSPlugin = require('purifycss-webpack')
-const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 
 const PATHS = require('../../PATHS')
@@ -169,7 +169,7 @@ exports.minCSS = ({ options } = {}) => ({
 // Minify JavaScript
 exports.minJS = () => ({
   optimization: {
-    minimizer: [new UglifyWebpackPlugin({ sourceMap: true })]
+    minimizer: [new TerserPlugin({ sourceMap: true })]
   }
 })
 
