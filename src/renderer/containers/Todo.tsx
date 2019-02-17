@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Draggable } from 'react-beautiful-dnd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import TodoCompleted from './TodoCompleted'
+import TodoCompleteCtrl from './TodoCompleteCtrl'
 import { ActionUpdateTodoFormName } from '../actions/types'
 import { default as TodoType } from '../types/Todo'
 import { readTodoFormName, readTodo } from '../selectors'
@@ -68,7 +68,7 @@ class Todo extends Component<Props, State> {
                     {...provided.dragHandleProps}
                     className={this.applyStyle(snapshot.isDragging)}
                   />
-                  <TodoCompleted id={id} type="checkbox" />
+                  <TodoCompleteCtrl id={id} type="checkbox" />
                 </div>
               }
               trailingIcon={<MaterialIcon icon="keyboard_arrow_right" className="todo-list-item-arrow" />}

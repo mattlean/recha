@@ -5,3 +5,15 @@
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.42);
 }
+
+#todo-name {
+  margin-bottom: 10px;
+}
+
+#todo-name > input {
+  padding: 16px;
+}
+
+#todo-details > textarea {
+  min-height: 61vh;
+}

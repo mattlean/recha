@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import TextField, { Input } from '@material/react-text-field'
 import Todo from '../types/Todo'
-import TodoCompleted from './TodoCompleted'
+import TodoCompleteCtrl from './TodoCompleteCtrl'
 import { ActionUpdateTodoFormName } from '../actions/types'
 import { readTodo, readTodoFormName } from '../selectors'
 import { State as ReduxState } from '../reducers/types'
@@ -78,7 +78,7 @@ class TodoDetails extends Component<Props, ComponentState> {
       return (
         <Card className="card-content">
           <div className="todo-details-btns">
-            <TodoCompleted id={todo.id} type="button" />
+            <TodoCompleteCtrl id={todo.id} type="button" />
             <MaterialIcon
               icon="close"
               onClick={() => {

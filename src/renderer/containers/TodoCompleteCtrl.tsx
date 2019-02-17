@@ -27,7 +27,7 @@ interface StateProps {
 
 type Props = DispatchProps & StateProps & OwnProps
 
-class TodoCompleted extends Component<Props> {
+class TodoCompleteCtrl extends Component<Props> {
   private handleClick = () => {
     const { completed, id, updateTodo, updateTodoFormCompleted } = this.props
 
@@ -82,4 +82,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoCompleted)
+)(TodoCompleteCtrl)
