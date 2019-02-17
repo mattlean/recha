@@ -9,7 +9,8 @@
 @import '@material/react-top-app-bar/index.scss';
 @import '@material/react-typography/index.scss';
 
-@import './styles/todoList.scss';
+@import './styles/TodoDetails.scss';
+@import './styles/TodoList.scss';
 @import './styles/util.scss';
 
 body {
@@ -32,4 +33,8 @@ body a {
 .card-content {
   font-family: $mdc-typography-font-family;
   padding: 16px;
+}
+
+.btn-close {
+  cursor: pointer;
 }

@@ -4,13 +4,15 @@ import moment from 'moment'
 import { connect } from 'react-redux'
 
 import Todo from '../types/Todo'
-import { NormalizedTodoRes } from '../actions/types'
-import { readTodo } from '../selectors'
-import { State } from '../reducers/types'
-import { updateTodo as acUpdateTodo } from '../actions/todos'
+import { ActionUpdateTodoFormCompleted, NormalizedTodoRes } from '../actions/types'
+import { Form, State } from '../reducers/types'
+import { readTodo, readTodoFormCompleted } from '../selectors'
+import { todoIsChecked } from '../util'
+import { updateTodo as acUpdateTodo, updateTodoFormCompleted as acUpdateTodoFormCompleted } from '../actions/todos'
 
 interface DispatchProps {
   updateTodo: (id: Todo['id'], data: Partial<Todo>) => Promise<NormalizedTodoRes>
+  updateTodoFormCompleted: (id: Todo['id'], completed_at: Todo['completed_at']) => ActionUpdateTodoFormCompleted
 }
 
 interface OwnProps {
@@ -19,56 +21,32 @@ interface OwnProps {
 }
 
 interface StateProps {
+  completed: Form['completed']
   reduxTodo: Todo
-}
-
-interface ComponentState {
-  checked: boolean
 }
 
 type Props = DispatchProps & StateProps & OwnProps
 
-class TodoCheckbox extends Component<Props, ComponentState> {
-  public constructor(props) {
-    super(props)
-    const { completed_at } = this.props
-
-    const checked = this.isChecked(completed_at) // eslint-disable-line no-unneeded-ternary
-
-    this.state = { checked }
-  }
-
-  public componentDidUpdate(prevProps): void {
-    const { reduxTodo } = this.props
-    if (prevProps.reduxTodo !== reduxTodo) {
-      this.setState({ checked: this.isChecked(reduxTodo.completed_at) }) // eslint-disable-line react/no-did-update-set-state
-    }
-  }
-
-  private isChecked = (completed_at: string) => {
-    if (completed_at) return true
-    return false
-  }
-
+class TodoCheckbox extends Component<Props> {
   private handleClick = () => {
-    const { id, updateTodo } = this.props
-    const { checked } = this.state
+    const { completed, id, updateTodo, updateTodoFormCompleted } = this.props
 
-    const data: Partial<Todo> = {}
-    if (checked) {
-      data.completed_at = null
+    let newCompletedAt
+    if (completed) {
+      newCompletedAt = null
     } else {
-      data.completed_at = moment()
+      newCompletedAt = moment()
         .utc()
         .format()
     }
-    updateTodo(id, data)
-    this.setState({ checked: !checked })
+
+    updateTodoFormCompleted(id, newCompletedAt)
+    updateTodo(id, { completed_at: newCompletedAt })
   }
 
   public render(): JSX.Element {
-    const { checked } = this.state
-    const icon = checked ? 'check_box' : 'check_box_outline_blank'
+    const { completed } = this.props
+    const icon = completed ? 'check_box' : 'check_box_outline_blank'
     return <MaterialIcon icon={icon} onClick={this.handleClick} className="todo-list-item-checkbox" />
   }
 }
@@ -76,12 +54,14 @@ class TodoCheckbox extends Component<Props, ComponentState> {
 const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => {
   const id = String(ownProps.id)
   return {
+    completed: readTodoFormCompleted(state.todos.ui.formById, id),
     reduxTodo: readTodo(state.todos.api, id)
   }
 }
 
 const mapDispatchToProps = {
-  updateTodo: acUpdateTodo
+  updateTodo: acUpdateTodo,
+  updateTodoFormCompleted: acUpdateTodoFormCompleted
 }
 
 export default connect(

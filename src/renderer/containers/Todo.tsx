@@ -6,14 +6,14 @@ import { Draggable } from 'react-beautiful-dnd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import TodoCheckbox from './TodoCheckbox'
-import { ActionUpdateFormTodoName } from '../actions/types'
+import { ActionUpdateTodoFormName } from '../actions/types'
 import { default as TodoType } from '../types/Todo'
-import { readFormTodoName, readTodo } from '../selectors'
+import { readTodoFormName, readTodo } from '../selectors'
 import { State } from '../reducers/types'
-import { updateFormTodoName as acUpdateFormTodoName } from '../actions/todos'
+import { updateTodoFormName as acUpdateTodoFormName } from '../actions/todos'
 
 interface DispatchProps {
-  updateFormTodoName: (id: TodoType['id'], name: TodoType['name']) => ActionUpdateFormTodoName
+  updateTodoFormName: (id: TodoType['id'], name: TodoType['name']) => ActionUpdateTodoFormName
 }
 
 interface OwnProps extends RouteComponentProps<{ id: string; date: string }> {
@@ -30,19 +30,15 @@ type Props = StateProps & DispatchProps & OwnProps
 
 class Todo extends Component<Props, State> {
   private handleChange = (evt): void => {
-    const { todo, updateFormTodoName } = this.props
-    updateFormTodoName(todo.id, evt.target.value)
+    const { todo, updateTodoFormName } = this.props
+    updateTodoFormName(todo.id, evt.target.value)
   }
 
   private handleFocus = (): void => {
     const { history, todo } = this.props
     const { date } = this.props.match.params
 
-    if (date) {
-      history.push({
-        pathname: `/${date}/${todo.id}`
-      })
-    }
+    if (date) history.push(`/${date}/${todo.id}`)
   }
 
   private applyStyle = (isDragging): string => {
@@ -89,12 +85,12 @@ class Todo extends Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = { updateFormTodoName: acUpdateFormTodoName }
+const mapDispatchToProps = { updateTodoFormName: acUpdateTodoFormName }
 
 const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => {
   const id = String(ownProps.todo.id)
   return {
-    formTodoName: readFormTodoName(state.todos.form.names, id),
+    formTodoName: readTodoFormName(state.todos.ui.formById, id),
     todo: readTodo(state.todos.api, id)
   }
 }

@@ -1,5 +1,10 @@
 import Todo from '../types/Todo'
 
+export interface Form {
+  name: string
+  completed: boolean
+}
+
 export type getState = () => State
 
 export interface State {
@@ -12,7 +17,7 @@ export interface StateById<T> {
 
 export interface StateTodos {
   api: StateTodosAPI
-  form: StateTodosForm
+  ui: StateTodosUI
 }
 
 export interface StateTodosAPI {
@@ -20,6 +25,6 @@ export interface StateTodosAPI {
   lists: StateById<string[]>
 }
 
-export interface StateTodosForm {
-  names: StateById<string>
+export interface StateTodosUI {
+  formById: StateById<Form>
 }

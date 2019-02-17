@@ -1,8 +1,8 @@
-import reducer, { defaultState } from '../names'
-import { APITypes } from '../../../types'
-import { FETCH_TODOS_SUCCESS } from '../../../actions/types'
-import { fetchTodosSuccess } from '../../../actions/todos'
-import { TYPE as TODO_TYPE } from '../../../types/Todo'
+import reducer, { defaultState } from '../formById'
+import { APITypes } from '../../../../types'
+import { FETCH_TODOS_SUCCESS } from '../../../../actions/types'
+import { fetchTodosSuccess } from '../../../../actions/todos'
+import { TYPE as TODO_TYPE } from '../../../../types/Todo'
 
 describe('todos names reducer', () => {
   it('should return the initial state', () => {

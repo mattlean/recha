@@ -1,6 +1,6 @@
-import { StateTodosAPI } from '../types'
+import { StateTodosAPI } from '../../types'
 
-import { ActionFetchTodosSuccess, FETCH_TODOS_SUCCESS } from '../../actions/types'
+import { ActionFetchTodosSuccess, FETCH_TODOS_SUCCESS } from '../../../actions/types'
 
 type State = StateTodosAPI['lists'] | {}
 

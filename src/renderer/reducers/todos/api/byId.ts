@@ -1,12 +1,12 @@
-import Todo from '../../types/Todo'
-import { StateById } from '../types'
+import Todo from '../../../types/Todo'
+import { StateById } from '../../types'
 
 import {
   ActionFetchTodosSuccess,
   ActionUpdateTodoSuccess,
   FETCH_TODOS_SUCCESS,
   UPDATE_TODO_SUCCESS
-} from '../../actions/types'
+} from '../../../actions/types'
 
 type Actions = ActionFetchTodosSuccess | ActionUpdateTodoSuccess
 

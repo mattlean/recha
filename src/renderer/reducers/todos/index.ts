@@ -1,13 +1,8 @@
 import { combineReducers } from 'redux'
 
-import byId from './byId'
-import lists from './lists'
-import names from './names'
+import api from './api'
+import ui from './ui'
 
-const api = combineReducers({ byId, lists })
-
-const form = combineReducers({ names })
-
-const todos = combineReducers({ api, form })
+const todos = combineReducers({ api, ui })
 
 export default todos

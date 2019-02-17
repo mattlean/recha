@@ -1,14 +1,11 @@
 import { normalize } from 'normalizr'
 
-import Todo from '../types/Todo'
-import { APIRes } from '../types'
-import { todoSchema, todoArraySchema } from '../util/schema'
-import { getTodos, patchTodo } from '../util/api/todos'
 import {
   ActionFetchTodosSuccess,
   ActionSelectTodo,
   ActionStartTodosReq,
-  ActionUpdateFormTodoName,
+  ActionUpdateTodoFormCompleted,
+  ActionUpdateTodoFormName,
   ActionUpdateTodoSuccess,
   FETCH_TODOS_SUCCESS,
   Initiator,
@@ -18,10 +15,15 @@ import {
   START_TODOS_REQ,
   ThunkDispatch,
   ThunkResult,
-  UPDATE_FORM_TODO_NAME,
+  UPDATE_TODO_FORM_COMPLETED,
+  UPDATE_TODO_FORM_NAME,
   UPDATE_TODO_SUCCESS
 } from './types'
-import { State } from '../reducers/types'
+import Todo from '../types/Todo'
+import { APIRes } from '../types'
+import { todoSchema, todoArraySchema } from '../util/schema'
+import { getTodos, patchTodo } from '../util/api/todos'
+import { todoIsChecked } from '../util'
 
 export function fetchTodosSuccess(date: Todo['date'], res: APIRes<Todo[]>): ActionFetchTodosSuccess {
   return {
@@ -59,14 +61,23 @@ export const updateTodo = (id: Todo['id'], data: Partial<Todo>): ThunkResult<Pro
   return patchTodo(id, data).then(res => Promise.resolve(dispatch(updateTodoSuccess(res)).res))
 }
 
-export const selectTodo = (id: Todo['id'], name: Todo['name']): ActionSelectTodo => ({
-  type: SELECT_TODO,
+export const updateTodoFormCompleted = (
+  id: Todo['id'],
+  completed_at: Todo['completed_at']
+): ActionUpdateTodoFormCompleted => ({
+  type: UPDATE_TODO_FORM_COMPLETED,
+  id,
+  completed: todoIsChecked(completed_at)
+})
+
+export const updateTodoFormName = (id: Todo['id'], name: Todo['name']): ActionUpdateTodoFormName => ({
+  type: UPDATE_TODO_FORM_NAME,
   id,
   name
 })
 
-export const updateFormTodoName = (id: Todo['id'], name: Todo['name']): ActionUpdateFormTodoName => ({
-  type: UPDATE_FORM_TODO_NAME,
+export const selectTodo = (id: Todo['id'], name: Todo['name']): ActionSelectTodo => ({
+  type: SELECT_TODO,
   id,
   name
 })
