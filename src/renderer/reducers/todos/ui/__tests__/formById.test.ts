@@ -20,7 +20,7 @@ describe('todos names reducer', () => {
           date: '2019-02-03T08:00:00.000Z',
           name: 'First!',
           order_num: 1,
-          completed_at: null,
+          completed_at: '2019-02-09T12:16:42.598Z',
           updated_at: '2019-02-09T12:16:42.598Z',
           created_at: '2019-02-09T12:16:42.598Z'
         },
@@ -38,7 +38,6 @@ describe('todos names reducer', () => {
           date: '2019-02-03T08:00:00.000Z',
           name: 'Third!',
           order_num: 3,
-          completed_at: null,
           updated_at: '2019-02-11T10:24:02.049Z',
           created_at: '2019-02-09T11:06:24.979Z'
         }
@@ -48,6 +47,10 @@ describe('todos names reducer', () => {
     const action = fetchTodosSuccess('2019-02-03', res)
     const state = reducer(defaultState, action)
 
-    expect(state).toEqual({ '70': 'Third!', '71': 'Second!', '72': 'First!' })
+    expect(state).toEqual({
+      '70': { completed: false, name: 'Third!' },
+      '71': { completed: false, name: 'Second!' },
+      '72': { completed: true, name: 'First!' }
+    })
   })
 })

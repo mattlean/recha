@@ -1,4 +1,3 @@
-import Button from '@material/react-button'
 import Card from '@material/react-card'
 import MaterialIcon from '@material/react-material-icon'
 import moment from 'moment'
@@ -8,6 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import TextField, { Input } from '@material/react-text-field'
 import Todo from '../types/Todo'
+import TodoCompleted from './TodoCompleted'
 import { ActionUpdateTodoFormName } from '../actions/types'
 import { readTodo, readTodoFormName } from '../selectors'
 import { State as ReduxState } from '../reducers/types'
@@ -78,9 +78,7 @@ class TodoDetails extends Component<Props, ComponentState> {
       return (
         <Card className="card-content">
           <div className="todo-details-btns">
-            <Button outlined icon={<MaterialIcon icon="check" />}>
-              Completed
-            </Button>
+            <TodoCompleted id={todo.id} type="button" />
             <MaterialIcon
               icon="close"
               onClick={() => {
@@ -105,8 +103,8 @@ class TodoDetails extends Component<Props, ComponentState> {
 const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => {
   const { id } = ownProps.match.params
   return {
-    formTodoName: readTodoFormName(state.todos.ui.formById, String(id)),
-    todo: readTodo(state.todos.api, String(id))
+    formTodoName: readTodoFormName(state.todos.ui.formById, id),
+    todo: readTodo(state.todos.api, id)
   }
 }
 

@@ -70,15 +70,6 @@ const formById = (state: StateById<Form> = defaultState, action: Actions): State
         ...newState
       }
     }
-    // case UPDATE_TODO_FORM_CHECKED: {
-    //   return {
-    //     ...state,
-    //     [action.id]: {
-    //       ...state[action.id],
-    //       checked: action.checked
-    //     }
-    //   }
-    // }
     default:
       return state
   }

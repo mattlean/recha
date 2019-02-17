@@ -1,3 +1,4 @@
+import Button from '@material/react-button'
 import MaterialIcon from '@material/react-material-icon'
 import React, { Component } from 'react'
 import moment from 'moment'
@@ -7,7 +8,6 @@ import Todo from '../types/Todo'
 import { ActionUpdateTodoFormCompleted, NormalizedTodoRes } from '../actions/types'
 import { Form, State } from '../reducers/types'
 import { readTodo, readTodoFormCompleted } from '../selectors'
-import { todoIsChecked } from '../util'
 import { updateTodo as acUpdateTodo, updateTodoFormCompleted as acUpdateTodoFormCompleted } from '../actions/todos'
 
 interface DispatchProps {
@@ -17,7 +17,7 @@ interface DispatchProps {
 
 interface OwnProps {
   id: number
-  completed_at?: string
+  type: 'button' | 'checkbox'
 }
 
 interface StateProps {
@@ -27,7 +27,7 @@ interface StateProps {
 
 type Props = DispatchProps & StateProps & OwnProps
 
-class TodoCheckbox extends Component<Props> {
+class TodoCompleted extends Component<Props> {
   private handleClick = () => {
     const { completed, id, updateTodo, updateTodoFormCompleted } = this.props
 
@@ -45,9 +45,24 @@ class TodoCheckbox extends Component<Props> {
   }
 
   public render(): JSX.Element {
-    const { completed } = this.props
-    const icon = completed ? 'check_box' : 'check_box_outline_blank'
-    return <MaterialIcon icon={icon} onClick={this.handleClick} className="todo-list-item-checkbox" />
+    const { completed, type } = this.props
+
+    if (type === 'checkbox') {
+      const icon = completed ? 'check_box' : 'check_box_outline_blank'
+      return <MaterialIcon icon={icon} onClick={this.handleClick} className="todo-list-item-checkbox" />
+    }
+    const btnProps: { outlined?: boolean; raised?: boolean } = {}
+    if (completed) {
+      btnProps.raised = true
+    } else {
+      btnProps.outlined = true
+    }
+
+    return (
+      <Button icon={<MaterialIcon icon="check" />} onClick={this.handleClick} {...btnProps}>
+        Completed
+      </Button>
+    )
   }
 }
 
@@ -67,4 +82,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoCheckbox)
+)(TodoCompleted)
