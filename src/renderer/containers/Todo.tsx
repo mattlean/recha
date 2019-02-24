@@ -51,37 +51,41 @@ class Todo extends Component<Props, State> {
   }
 
   public render(): JSX.Element {
-    const { formTodoName, index } = this.props
-    const { completed_at, id } = this.props.todo
+    const { formTodoName, index, todo } = this.props
 
-    /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-    return (
-      <Draggable draggableId={String(id)} index={index}>
-        {(provided, snapshot) => (
-          <div ref={provided.innerRef} {...provided.draggableProps}>
-            <TextField
-              label={String(id)}
-              leadingIcon={
-                <div className="todo-list-item-ctrls" tabIndex={0}>
-                  <MaterialIcon
-                    icon="drag_indicator"
-                    {...provided.dragHandleProps}
-                    className={this.applyStyle(snapshot.isDragging)}
-                  />
-                  <TodoCompleteCtrl id={id} type="checkbox" />
-                </div>
-              }
-              trailingIcon={<MaterialIcon icon="keyboard_arrow_right" className="todo-list-item-arrow" />}
-              floatingLabelClassName="todo-list-item-label"
-              className="todo-list-item"
-            >
-              <Input value={formTodoName} onChange={this.handleChange} onFocus={this.handleFocus} />
-            </TextField>
-          </div>
-        )}
-      </Draggable>
-    )
-    /* eslint-enable jsx-a11y/no-noninteractive-tabindex */
+    if (todo) {
+      const { completed_at, id } = todo
+
+      /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+      return (
+        <Draggable draggableId={String(id)} index={index}>
+          {(provided, snapshot) => (
+            <div ref={provided.innerRef} {...provided.draggableProps}>
+              <TextField
+                label={String(id)}
+                leadingIcon={
+                  <div className="todo-list-item-ctrls" tabIndex={0}>
+                    <MaterialIcon
+                      icon="drag_indicator"
+                      {...provided.dragHandleProps}
+                      className={this.applyStyle(snapshot.isDragging)}
+                    />
+                    <TodoCompleteCtrl id={id} type="checkbox" />
+                  </div>
+                }
+                trailingIcon={<MaterialIcon icon="keyboard_arrow_right" className="todo-list-item-arrow" />}
+                floatingLabelClassName="todo-list-item-label"
+                className="todo-list-item"
+              >
+                <Input value={formTodoName} onChange={this.handleChange} onFocus={this.handleFocus} />
+              </TextField>
+            </div>
+          )}
+        </Draggable>
+      )
+      /* eslint-enable jsx-a11y/no-noninteractive-tabindex */
+    }
+    return <></>
   }
 }
 

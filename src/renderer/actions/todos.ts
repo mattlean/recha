@@ -3,6 +3,7 @@ import { normalize } from 'normalizr'
 import {
   ActionAddTodoSuccess,
   ActionFetchTodosSuccess,
+  ActionRemoveTodoSuccess,
   ActionStartTodosReq,
   ActionUpdateTodoFormCompleted,
   ActionUpdateTodoFormName,
@@ -12,6 +13,7 @@ import {
   Initiator,
   NormalizedTodoRes,
   NormalizedTodosRes,
+  REMOVE_TODO_SUCCESS,
   START_TODOS_REQ,
   ThunkDispatch,
   ThunkResult,
@@ -22,7 +24,7 @@ import {
 import Todo from '../types/Todo'
 import { APIRes } from '../types'
 import { todoSchema, todoArraySchema } from '../util/schema'
-import { getTodos, patchTodo, patchTodoOrders, postTodo } from '../util/api/todos'
+import { deleteTodo, getTodos, patchTodo, patchTodoOrders, postTodo } from '../util/api/todos'
 import { todoIsChecked } from '../util'
 
 export const startTodosReq = (initiator: Initiator): ActionStartTodosReq => ({
@@ -56,6 +58,18 @@ export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<NormalizedTo
   return getTodos({ date, col: 'order_num', dir: 'ASC' }).then(res =>
     Promise.resolve(dispatch(fetchTodosSuccess(date, res.data)).res)
   )
+}
+
+export const removeTodoSuccess = (date: string, id: Todo['id']): ActionRemoveTodoSuccess => ({
+  type: REMOVE_TODO_SUCCESS,
+  date,
+  id
+})
+
+export const removeTodo = (id: Todo['id']): ThunkResult<Promise<Todo['id']>> => (dispatch: ThunkDispatch) => {
+  dispatch(startTodosReq('removeTodo'))
+
+  return deleteTodo(id).then(res => Promise.resolve(dispatch(removeTodoSuccess(res.data.date, res.data.id)).id))
 }
 
 export const reorderTodos = (date: Todo['date'], data: number[]): ThunkResult<Promise<NormalizedTodosRes>> => (

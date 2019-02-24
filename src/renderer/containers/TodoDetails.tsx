@@ -3,18 +3,21 @@ import IconButton from '@material/react-icon-button'
 import MaterialIcon from '@material/react-material-icon'
 import moment from 'moment'
 import React, { Component } from 'react'
+import TextField, { Input } from '@material/react-text-field'
 import { connect } from 'react-redux'
+import { DialogButton } from '@material/react-dialog'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import TextField, { Input } from '@material/react-text-field'
+import Modal from '../components/Modal'
 import Todo from '../types/Todo'
 import TodoCompleteCtrl from './TodoCompleteCtrl'
 import { ActionUpdateTodoFormName } from '../actions/types'
 import { readTodo, readTodoFormName } from '../selectors'
+import { removeTodo as acRemoveTodo, updateTodoFormName as acUpdateTodoFormName } from '../actions/todos'
 import { State as ReduxState } from '../reducers/types'
-import { updateTodoFormName as acUpdateTodoFormName } from '../actions/todos'
 
 interface DispatchProps {
+  removeTodo: (id: Todo['id']) => Promise<Todo['id']>
   updateTodoFormName: (id: Todo['id'], name: Todo['name']) => ActionUpdateTodoFormName
 }
 
@@ -23,10 +26,11 @@ interface StateProps {
   todo: Todo
 }
 
-type OwnProps = RouteComponentProps<{ id: string }>
+type OwnProps = RouteComponentProps<{ date: string; id: string }>
 
 interface ComponentState {
   details: Todo['details']
+  openModal: boolean
 }
 
 type Props = DispatchProps & StateProps & OwnProps
@@ -42,7 +46,7 @@ class TodoDetails extends Component<Props, ComponentState> {
     } else {
       details = ''
     }
-    this.state = { details }
+    this.state = { details, openModal: false }
   }
 
   public componentDidUpdate(prevProps): void {
@@ -60,8 +64,25 @@ class TodoDetails extends Component<Props, ComponentState> {
     /* eslint-enable react/no-did-update-set-state */
   }
 
+  private closeDetails = () => {
+    const { date } = this.props.match.params
+    const { history } = this.props
+    history.push(`/${moment(date).format('YYYY-MM-DD')}`)
+  }
+
   private handleDetailsChange = (evt): void => {
     this.setState({ details: evt.target.value })
+  }
+
+  private handleModalClose = (action: string): void => {
+    const { id } = this.props.match.params
+    const { removeTodo } = this.props
+
+    if (action === 'delete') {
+      removeTodo(Number(id)).then(() => this.closeDetails())
+    }
+
+    this.setState({ openModal: false })
   }
 
   private handleNameChange = (evt): void => {
@@ -70,26 +91,29 @@ class TodoDetails extends Component<Props, ComponentState> {
   }
 
   public render(): JSX.Element {
-    const { id } = this.props.match.params
+    const { date, id } = this.props.match.params
     const { formTodoName, history, todo } = this.props
+    const modalButtons = [
+      <DialogButton key="keep" action="keep">
+        Keep
+      </DialogButton>,
+      <DialogButton key="delete" action="delete" isDefault>
+        DELETE
+      </DialogButton>
+    ]
 
-    if (id && todo) {
-      const { date, name } = todo
-      const { details } = this.state
+    if (date && id && todo) {
+      const { name } = todo
+      const { details, openModal } = this.state
       return (
         <Card className="card-content">
           <div className="todo-details-btns">
             <TodoCompleteCtrl id={todo.id} type="button" />
-            <IconButton>
+            <IconButton onClick={() => this.setState({ openModal: true })}>
               <MaterialIcon icon="delete_forever" />
             </IconButton>
-            <IconButton>
-              <MaterialIcon
-                icon="close"
-                onClick={() => {
-                  history.push(`/${moment(date).format('YYYY-MM-DD')}`)
-                }}
-              />
+            <IconButton onClick={() => this.closeDetails()}>
+              <MaterialIcon icon="close" />
             </IconButton>
           </div>
           <TextField id="todo-name" label={name} fullWidth floatingLabelClassName="util-display-none">
@@ -98,6 +122,9 @@ class TodoDetails extends Component<Props, ComponentState> {
           <TextField id="todo-details" label={details} fullWidth textarea floatingLabelClassName="util-display-none">
             <Input value={details} onChange={this.handleDetailsChange} />
           </TextField>
+          <Modal title="Remove Todo?" buttons={modalButtons} isOpen={openModal} onClose={this.handleModalClose}>
+            <p>Be careful! Doing this will delete the todo forever!</p>
+          </Modal>
         </Card>
       )
     }
@@ -114,6 +141,7 @@ const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => {
 }
 
 const mapDispatchToProps = {
+  removeTodo: acRemoveTodo,
   updateTodoFormName: acUpdateTodoFormName
 }
 

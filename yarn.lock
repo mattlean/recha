@@ -873,6 +873,22 @@
     "@material/selection-control" "^0.41.0"
     "@material/theme" "^0.41.0"
 
+"@material/dialog@0.43.0":
+  version "0.43.0"
+  resolved "https://registry.yarnpkg.com/@material/dialog/-/dialog-0.43.0.tgz#e1d9791c0f96627d9963f8540c7e4b64de855726"
+  integrity sha512-1WDYfzs7393Zj2BZyyix1NScUMHC+Je5gjXDTjNgmTJ54fC7izkbTeKtllczehnIOqRLPzwiWEtu4JWd+1SWgQ==
+  dependencies:
+    "@material/animation" "^0.41.0"
+    "@material/base" "^0.41.0"
+    "@material/dom" "^0.41.0"
+    "@material/elevation" "^0.43.0"
+    "@material/ripple" "^0.43.0"
+    "@material/rtl" "^0.42.0"
+    "@material/shape" "^0.43.0"
+    "@material/theme" "^0.43.0"
+    "@material/typography" "^0.43.0"
+    focus-trap "^4.0.2"
+
 "@material/dom@^0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@material/dom/-/dom-0.41.0.tgz#6756865f97bad4c91ee75e69d769d7cdc25398ae"
@@ -968,6 +984,16 @@
     "@material/shape" "^0.41.0"
     "@material/theme" "^0.41.0"
 
+"@material/react-button@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@material/react-button/-/react-button-0.10.0.tgz#8c4166d42bc598f2137e4696d8cd293d4d3827c7"
+  integrity sha512-gzGV6sbqPnu78Anw6nRrK1caBKDREIdOTgLMMyhMZjKlqEcg6FcF56foI0hEv0rQRppBjCCmsuUiXil+LqMSTw==
+  dependencies:
+    "@material/button" "^0.43.0"
+    "@material/react-ripple" "^0.10.0"
+    classnames "^2.2.5"
+    react "^16.4.2"
+
 "@material/react-button@^0.9.2":
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/@material/react-button/-/react-button-0.9.2.tgz#6231fb9f0a78abdafd87c025ca8efc9cba8b9f62"
@@ -997,6 +1023,18 @@
     "@material/react-ripple" "^0.9.0"
     classnames "^2.2.5"
     react "^16.3.2"
+
+"@material/react-dialog@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@material/react-dialog/-/react-dialog-0.10.0.tgz#71eea8ba8dd85960423aefa0268645d5e406a75d"
+  integrity sha512-rbz/OU6DusJUxvoF7ng8YbGZJmAoqgP5MGqBJx6aIclH4MtHG3dhHEAML54GXXJpZPB3YcfeY/eFQZ2690pB1w==
+  dependencies:
+    "@material/dialog" "0.43.0"
+    "@material/dom" "^0.41.0"
+    "@material/react-button" "^0.10.0"
+    classnames "^2.2.5"
+    focus-trap "^4.0.2"
+    react "^16.4.2"
 
 "@material/react-drawer@^0.8.0":
   version "0.8.0"
@@ -4725,6 +4763,14 @@ focus-trap@^3.0.0:
   integrity sha512-jTFblf0tLWbleGjj2JZsAKbgtZTdL1uC48L8FcmSDl4c2vDoU4NycN1kgV5vJhuq1mxNFkw7uWZ1JAGlINWvyw==
   dependencies:
     tabbable "^3.1.0"
+    xtend "^4.0.1"
+
+focus-trap@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-4.0.2.tgz#4ee2b96547c9ea0e4252a2d4b2cca68944194663"
+  integrity sha512-HtLjfAK7Hp2qbBtLS6wEznID1mPT+48ZnP2nkHzgjpL4kroYHg0CdqJ5cTXk+UO5znAxF5fRUkhdyfgrhh8Lzw==
+  dependencies:
+    tabbable "^3.1.2"
     xtend "^4.0.1"
 
 follow-redirects@^1.0.0:
@@ -10655,7 +10701,7 @@ symbol-tree@^3.2.2:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
   integrity sha1-rifbOPZgp64uHDt9G8KQgZuFGeY=
 
-tabbable@^3.1.0:
+tabbable@^3.1.0, tabbable@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-3.1.2.tgz#f2d16cccd01f400e38635c7181adfe0ad965a4a2"
   integrity sha512-wjB6puVXTYO0BSFtCmWQubA/KIn7Xvajw0x0l6eJUudMG/EAiJvIUnyNX6xO4NpGrJ16lbD0eUseB9WxW0vlpQ==

@@ -3,13 +3,15 @@ import { StateTodosAPI } from '../../types'
 import {
   ActionAddTodoSuccess,
   ActionFetchTodosSuccess,
+  ActionRemoveTodoSuccess,
   ActionUpdateTodoSuccess,
   ADD_TODO_SUCCESS,
   FETCH_TODOS_SUCCESS,
+  REMOVE_TODO_SUCCESS,
   UPDATE_TODO_SUCCESS
 } from '../../../actions/types'
 
-type Actions = ActionAddTodoSuccess | ActionFetchTodosSuccess | ActionUpdateTodoSuccess
+type Actions = ActionAddTodoSuccess | ActionFetchTodosSuccess | ActionRemoveTodoSuccess | ActionUpdateTodoSuccess
 
 const defaultState = {}
 
@@ -22,6 +24,11 @@ const byId = (state: StateTodosAPI['byId'] = defaultState, action: Actions): Sta
         ...state,
         ...action.res.entities.todos
       }
+    case REMOVE_TODO_SUCCESS: {
+      const newState = { ...state }
+      delete newState[action.id]
+      return newState
+    }
     default:
       return state
   }
