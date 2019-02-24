@@ -22,7 +22,7 @@ export interface StateTodos {
 
 export interface StateTodosAPI {
   byId: StateById<Todo>
-  lists: StateById<string[]>
+  lists: StateById<number[]>
 }
 
 export interface StateTodosUI {

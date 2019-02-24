@@ -1,4 +1,6 @@
 import {
+  ADD_TODO_SUCCESS,
+  ActionAddTodoSuccess,
   ActionFetchTodosSuccess,
   ActionUpdateTodoFormCompleted,
   ActionUpdateTodoFormName,
@@ -14,27 +16,35 @@ import { todoIsChecked } from '../../../util'
 export const defaultState = {}
 
 type Actions =
+  | ActionAddTodoSuccess
   | ActionFetchTodosSuccess
   | ActionUpdateTodoFormCompleted
   | ActionUpdateTodoFormName
   | ActionUpdateTodoSuccess
 
 const formById = (state: StateById<Form> = defaultState, action: Actions): StateById<Form> => {
+  const updateForm = (entities): StateById<Form> => {
+    const newState = {}
+    const { todos } = entities
+    Object.keys(todos).forEach(id => {
+      newState[id] = {
+        completed: todoIsChecked(todos[id].completed_at),
+        name: todos[id].name
+      }
+    })
+    return {
+      ...state,
+      ...newState
+    }
+  }
+
   switch (action.type) {
+    case ADD_TODO_SUCCESS: {
+      return updateForm(action.res.entities)
+    }
     case FETCH_TODOS_SUCCESS: {
-      const newState = {}
       if (action.res.result.length > 0) {
-        const { todos } = action.res.entities
-        Object.keys(todos).forEach(id => {
-          newState[id] = {
-            completed: todoIsChecked(todos[id].completed_at),
-            name: todos[id].name
-          }
-        })
-        return {
-          ...state,
-          ...newState
-        }
+        return updateForm(action.res.entities)
       }
       return state
     }
@@ -57,18 +67,7 @@ const formById = (state: StateById<Form> = defaultState, action: Actions): State
       }
     }
     case UPDATE_TODO_SUCCESS: {
-      const newState = {}
-      const { todos } = action.res.entities
-      Object.keys(todos).forEach(id => {
-        newState[id] = {
-          completed: todoIsChecked(todos[id].completed_at),
-          name: todos[id].name
-        }
-      })
-      return {
-        ...state,
-        ...newState
-      }
+      return updateForm(action.res.entities)
     }
     default:
       return state

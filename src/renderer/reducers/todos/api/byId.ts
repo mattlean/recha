@@ -18,10 +18,6 @@ const byId = (state: StateById<Todo> = defaultState, action: Actions): StateById
   switch (action.type) {
     case ADD_TODO_SUCCESS:
     case FETCH_TODOS_SUCCESS:
-      return {
-        ...state,
-        ...action.res.entities.todos
-      }
     case UPDATE_TODO_SUCCESS:
       return {
         ...state,

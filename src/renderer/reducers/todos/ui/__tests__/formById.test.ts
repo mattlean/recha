@@ -44,7 +44,7 @@ describe('todos names reducer', () => {
       ],
       type: TODO_TYPE as APITypes
     }
-    const action = fetchTodosSuccess('2019-02-03', res)
+    const action = fetchTodosSuccess('2019-02-03', res.data)
     const state = reducer(defaultState, action)
 
     expect(state).toEqual({

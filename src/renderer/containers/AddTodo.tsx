@@ -7,6 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import Todo from '../types/Todo'
 import { addTodo as acAddTodo } from '../actions/todos'
 import { NormalizedTodoRes } from '../actions/types'
+import { State as ReduxState } from '../reducers/types'
 
 interface DispatchProps {
   addTodo: (data: Partial<Todo>) => Promise<NormalizedTodoRes>
@@ -14,13 +15,17 @@ interface DispatchProps {
 
 type OwnProps = RouteComponentProps<{ date: string }>
 
-type Props = DispatchProps & OwnProps
+interface StateProps {
+  todoListLength: number
+}
 
-interface State {
+type Props = DispatchProps & StateProps & OwnProps
+
+interface ComponentState {
   value: string
 }
 
-class AddTodo extends Component<Props, State> {
+class AddTodo extends Component<Props, ComponentState> {
   public state = {
     value: ''
   }
@@ -31,11 +36,11 @@ class AddTodo extends Component<Props, State> {
 
   private handleKeyUp = evt => {
     if (evt.target.value && evt.key === 'Enter') {
-      const { addTodo } = this.props
+      const { addTodo, todoListLength } = this.props
       const { date } = this.props.match.params
 
       this.setState({ value: '' })
-      addTodo({ date, name: String(evt.target.value) })
+      addTodo({ date, name: String(evt.target.value), order_num: todoListLength })
     }
   }
 
@@ -59,13 +64,22 @@ class AddTodo extends Component<Props, State> {
   }
 }
 
+const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => {
+  let length = 0
+  const todoList = state.todos.api.lists[ownProps.match.params.date]
+  if (todoList) length = todoList.length
+  return {
+    todoListLength: length
+  }
+}
+
 const mapDispatchToProps = {
   addTodo: acAddTodo
 }
 
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(AddTodo)
 )
