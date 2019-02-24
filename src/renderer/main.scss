@@ -2,6 +2,7 @@
 @import '@material/react-card/index.scss';
 @import '@material/react-checkbox/index.scss';
 @import '@material/react-drawer/index.scss';
+@import '@material/react-icon-button/index.scss';
 @import '@material/react-layout-grid/index.scss';
 @import '@material/react-list/index.scss';
 @import '@material/react-material-icon/index.scss';
@@ -33,8 +34,4 @@ body a {
 .card-content {
   font-family: $mdc-typography-font-family;
   padding: 16px;
-}
-
-.btn-close {
-  cursor: pointer;
 }

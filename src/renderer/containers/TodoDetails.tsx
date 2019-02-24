@@ -1,4 +1,5 @@
 import Card from '@material/react-card'
+import IconButton from '@material/react-icon-button'
 import MaterialIcon from '@material/react-material-icon'
 import moment from 'moment'
 import React, { Component } from 'react'
@@ -79,13 +80,17 @@ class TodoDetails extends Component<Props, ComponentState> {
         <Card className="card-content">
           <div className="todo-details-btns">
             <TodoCompleteCtrl id={todo.id} type="button" />
-            <MaterialIcon
-              icon="close"
-              onClick={() => {
-                history.push(`/${moment(date).format('YYYY-MM-DD')}`)
-              }}
-              className="btn-close"
-            />
+            <IconButton>
+              <MaterialIcon icon="delete_forever" />
+            </IconButton>
+            <IconButton>
+              <MaterialIcon
+                icon="close"
+                onClick={() => {
+                  history.push(`/${moment(date).format('YYYY-MM-DD')}`)
+                }}
+              />
+            </IconButton>
           </div>
           <TextField id="todo-name" label={name} fullWidth floatingLabelClassName="util-display-none">
             <Input value={formTodoName} onChange={this.handleNameChange} />

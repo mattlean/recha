@@ -921,6 +921,15 @@
     "@material/theme" "^0.41.0"
     "@material/typography" "^0.41.0"
 
+"@material/icon-button@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/icon-button/-/icon-button-0.41.0.tgz#695c334232dd11266805c6196ac0a3ee95f37204"
+  integrity sha512-RzGSH97aUcTW4he+uU8ahT75DEn6+29L0hH4PBKe03/R/qHFfOrWfjfd03PPiCkaT5SNkPkt1YnfEPqKolnH1Q==
+  dependencies:
+    "@material/base" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    "@material/theme" "^0.41.0"
+
 "@material/layout-grid@^0.41.0":
   version "0.41.0"
   resolved "https://registry.yarnpkg.com/@material/layout-grid/-/layout-grid-0.41.0.tgz#2e7d3be76313e0684d573b10c2c6a88b3230d251"
@@ -1009,6 +1018,16 @@
     classnames "^2.2.5"
     react "^16.4.2"
 
+"@material/react-icon-button@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@material/react-icon-button/-/react-icon-button-0.10.0.tgz#c8510bbe44ea0db847e64aa9786e35ea3f7203de"
+  integrity sha512-7tPeAUwZYAfd1BTKijY4IAX8GWLrEJvJIpY+u+kXy5VkwkJLiUwMExQ9hRjciWpesvg2sUQ1YcJbDWbiyf6meQ==
+  dependencies:
+    "@material/icon-button" "^0.41.0"
+    "@material/react-ripple" "^0.10.0"
+    classnames "^2.2.5"
+    react "^16.3.2"
+
 "@material/react-layout-grid@^0.8.0":
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/@material/react-layout-grid/-/react-layout-grid-0.8.0.tgz#b0f73a3342b56badb0be4fe40b2f969962ca8263"
@@ -1053,6 +1072,16 @@
     "@material/notched-outline" "^0.41.0"
     classnames "^2.2.5"
     react "^16.4.2"
+
+"@material/react-ripple@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@material/react-ripple/-/react-ripple-0.10.0.tgz#98fead6a91725648aa50f0fc28bfe2af0d261564"
+  integrity sha512-rXg4lI8fN8QmSd5JZW4c7SiD9BCQWeviq7tkDaNSf3FVcqB/rOwSXfOW1Kwgu7inFlDdDuKD30QLYzpSXmIZFA==
+  dependencies:
+    "@material/ripple" "^0.41.0"
+    classnames "^2.2.5"
+    react "^16.4.2"
+    utility-types "^3.2.1"
 
 "@material/react-ripple@^0.9.0":
   version "0.9.0"
