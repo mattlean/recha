@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import AddTodo from '../components/AddTodo'
+import AddTodo from './AddTodo'
 import Todo from './Todo'
 import { default as TodoType } from '../types/Todo'
 import { fetchTodos as acFetchTodos, reorderTodos as acReorderTodos } from '../actions/todos'
@@ -126,7 +126,7 @@ class TodoList extends Component<Props, ComponentState> {
         </Droppable>
       )
     } else {
-      dndList = <i>No todos found...</i>
+      dndList = <i className="util-top-gap">No todos found...</i>
     }
 
     return (

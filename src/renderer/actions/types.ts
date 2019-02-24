@@ -3,6 +3,7 @@ import { ThunkAction, ThunkDispatch as ReduxThunkDispatch } from 'redux-thunk'
 import Todo from '../types/Todo'
 import { State } from '../reducers/types'
 
+export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS'
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS'
 export const START_TODOS_REQ = 'START_TODOS_REQ'
 export const UPDATE_TODO_FORM_COMPLETED = 'UPDATE_TODO_FORM_COMPLETED'
@@ -10,11 +11,18 @@ export const UPDATE_TODO_FORM_NAME = 'UPDATE_TODO_FORM_NAME'
 export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
 
 export type Actions =
+  | ActionAddTodoSuccess
   | ActionFetchTodosSuccess
   | ActionStartTodosReq
   | ActionUpdateTodoFormCompleted
   | ActionUpdateTodoFormName
   | ActionUpdateTodoSuccess
+
+export interface ActionAddTodoSuccess {
+  type: typeof ADD_TODO_SUCCESS
+  date: Todo['date']
+  res: NormalizedTodoRes
+}
 
 export interface ActionFetchTodosSuccess {
   type: typeof FETCH_TODOS_SUCCESS
@@ -44,7 +52,7 @@ export interface ActionUpdateTodoSuccess {
   res: NormalizedTodoRes
 }
 
-export type Initiator = 'fetchTodos' | 'reorderTodos' | 'updateTodo'
+export type Initiator = 'addTodo' | 'fetchTodos' | 'reorderTodos' | 'updateTodo'
 
 interface NormalizedBaseTodoRes {
   entities: {

@@ -14,6 +14,12 @@ interface TodosQuery {
 
 const TODOS_PATH = `${ROOT_PATH}/todos`
 
+export const postTodo = (data: Partial<Todo>): Promise<APIRes<Todo>> =>
+  fetch(`${TODOS_PATH}`, genReqOptions('POST', data)).then(res => {
+    if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
+    return res.json()
+  })
+
 export const getTodos = (query?: Partial<TodosQuery>): Promise<APIRes<Todo[]>> => {
   let newPathTodos = TODOS_PATH
   if (query) {
@@ -33,8 +39,7 @@ export const getTodoLists = (): Promise<APIRes<string[]>> =>
     return res.json()
   })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const patchTodo = (id: number, data: any): Promise<APIRes<Todo>> =>
+export const patchTodo = (id: number, data: Partial<Todo>): Promise<APIRes<Todo>> =>
   fetch(`${TODOS_PATH}/${id}`, genReqOptions('PATCH', data)).then(res => {
     if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
     return res.json()
