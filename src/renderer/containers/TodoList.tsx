@@ -131,14 +131,6 @@ class TodoList extends Component<Props, ComponentState> {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <button
-          type="button"
-          onClick={() => {
-            fetchTodos(date)
-          }}
-        >
-          Test fetch todos
-        </button>
         <h1>{date}</h1>
         <AddTodo />
         {dndList}

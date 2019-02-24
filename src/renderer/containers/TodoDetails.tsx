@@ -5,19 +5,25 @@ import moment from 'moment'
 import React, { Component } from 'react'
 import TextField, { Input } from '@material/react-text-field'
 import { connect } from 'react-redux'
+import { debounce } from 'lodash'
 import { DialogButton } from '@material/react-dialog'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import Modal from '../components/Modal'
 import Todo from '../types/Todo'
 import TodoCompleteCtrl from './TodoCompleteCtrl'
-import { ActionUpdateTodoFormName } from '../actions/types'
+import { ActionUpdateTodoFormName, NormalizedTodoRes } from '../actions/types'
 import { readTodo, readTodoFormName } from '../selectors'
-import { removeTodo as acRemoveTodo, updateTodoFormName as acUpdateTodoFormName } from '../actions/todos'
+import {
+  removeTodo as acRemoveTodo,
+  updateTodo as acUpdateTodo,
+  updateTodoFormName as acUpdateTodoFormName
+} from '../actions/todos'
 import { State as ReduxState } from '../reducers/types'
 
 interface DispatchProps {
   removeTodo: (id: Todo['id']) => Promise<Todo['id']>
+  updateTodo: (id: Todo['id'], data: Partial<Todo>) => Promise<NormalizedTodoRes>
   updateTodoFormName: (id: Todo['id'], name: Todo['name']) => ActionUpdateTodoFormName
 }
 
@@ -38,15 +44,18 @@ type Props = DispatchProps & StateProps & OwnProps
 class TodoDetails extends Component<Props, ComponentState> {
   public constructor(props) {
     super(props)
+    const { todo, updateTodo } = props
 
     // Component state manages details. Redux state manages name because it is shared with Todo container.
     let details
-    if (props.todo && props.todo.details) {
-      details = props.todo.details
+    if (todo && todo.details) {
+      details = todo.details
     } else {
       details = ''
     }
     this.state = { details, openModal: false }
+
+    this.debouncedUpdateTodo = debounce(updateTodo, 500)
   }
 
   public componentDidUpdate(prevProps): void {
@@ -71,7 +80,10 @@ class TodoDetails extends Component<Props, ComponentState> {
   }
 
   private handleDetailsChange = (evt): void => {
+    const { formTodoName, todo } = this.props
+
     this.setState({ details: evt.target.value })
+    this.debouncedUpdateTodo(todo.id, { name: formTodoName, details: evt.target.value })
   }
 
   private handleModalClose = (action: string): void => {
@@ -87,8 +99,13 @@ class TodoDetails extends Component<Props, ComponentState> {
 
   private handleNameChange = (evt): void => {
     const { todo, updateTodoFormName } = this.props
+    const { details } = this.state
+
     updateTodoFormName(todo.id, evt.target.value)
+    this.debouncedUpdateTodo(todo.id, { name: evt.target.value, details })
   }
+
+  private debouncedUpdateTodo: (id: Todo['id'], data: Partial<Todo>) => Promise<NormalizedTodoRes>
 
   public render(): JSX.Element {
     const { date, id } = this.props.match.params
@@ -142,6 +159,7 @@ const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => {
 
 const mapDispatchToProps = {
   removeTodo: acRemoveTodo,
+  updateTodo: acUpdateTodo,
   updateTodoFormName: acUpdateTodoFormName
 }
 

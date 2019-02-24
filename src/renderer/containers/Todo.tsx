@@ -2,15 +2,16 @@ import MaterialIcon from '@material/react-material-icon'
 import React, { Component } from 'react'
 import TextField, { Input } from '@material/react-text-field'
 import { connect } from 'react-redux'
+import { debounce } from 'lodash'
 import { Draggable } from 'react-beautiful-dnd'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import TodoCompleteCtrl from './TodoCompleteCtrl'
-import { ActionUpdateTodoFormName } from '../actions/types'
+import { ActionUpdateTodoFormName, NormalizedTodoRes } from '../actions/types'
 import { default as TodoType } from '../types/Todo'
 import { readTodoFormName, readTodo } from '../selectors'
 import { State } from '../reducers/types'
-import { updateTodoFormName as acUpdateTodoFormName } from '../actions/todos'
+import { updateTodo as acUpdateTodo, updateTodoFormName as acUpdateTodoFormName } from '../actions/todos'
 
 interface DispatchProps {
   updateTodoFormName: (id: TodoType['id'], name: TodoType['name']) => ActionUpdateTodoFormName
@@ -29,9 +30,17 @@ interface StateProps {
 type Props = StateProps & DispatchProps & OwnProps
 
 class Todo extends Component<Props, State> {
+  public constructor(props) {
+    super(props)
+    const { updateTodo } = props
+
+    this.debouncedUpdateTodo = debounce(updateTodo, 500)
+  }
+
   private handleChange = (evt): void => {
     const { todo, updateTodoFormName } = this.props
     updateTodoFormName(todo.id, evt.target.value)
+    this.debouncedUpdateTodo(todo.id, { name: evt.target.value })
   }
 
   private handleFocus = (): void => {
@@ -49,6 +58,8 @@ class Todo extends Component<Props, State> {
     }
     return styles
   }
+
+  private debouncedUpdateTodo: (id: TodoType['id'], data: Partial<TodoType>) => Promise<NormalizedTodoRes>
 
   public render(): JSX.Element {
     const { formTodoName, index, todo } = this.props
@@ -89,7 +100,10 @@ class Todo extends Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = { updateTodoFormName: acUpdateTodoFormName }
+const mapDispatchToProps = {
+  updateTodo: acUpdateTodo,
+  updateTodoFormName: acUpdateTodoFormName
+}
 
 const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => {
   const id = String(ownProps.todo.id)
