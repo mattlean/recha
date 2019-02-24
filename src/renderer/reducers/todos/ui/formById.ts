@@ -10,7 +10,7 @@ import {
   UPDATE_TODO_FORM_NAME,
   UPDATE_TODO_SUCCESS
 } from '../../../actions/types'
-import { Form, StateById } from '../../types'
+import { StateTodosUI } from '../../types'
 import { todoIsChecked } from '../../../util'
 
 export const defaultState = {}
@@ -22,8 +22,8 @@ type Actions =
   | ActionUpdateTodoFormName
   | ActionUpdateTodoSuccess
 
-const formById = (state: StateById<Form> = defaultState, action: Actions): StateById<Form> => {
-  const updateForm = (entities): StateById<Form> => {
+const formById = (state: StateTodosUI['formById'] = defaultState, action: Actions): StateTodosUI['formById'] => {
+  const updateForm = (entities): StateTodosUI['formById'] => {
     const newState = {}
     const { todos } = entities
     Object.keys(todos).forEach(id => {

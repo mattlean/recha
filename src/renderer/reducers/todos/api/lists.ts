@@ -10,14 +10,12 @@ import {
 
 type Actions = ActionAddTodoSuccess | ActionFetchTodosSuccess
 
-type State = StateTodosAPI['lists'] | {}
-
 const defaultState = {}
 
-const lists = (state: State = defaultState, action: Actions): State => {
+const lists = (state: StateTodosAPI['lists'] = defaultState, action: Actions): StateTodosAPI['lists'] => {
   switch (action.type) {
     case ADD_TODO_SUCCESS: {
-      const formattedDate = moment(state[action.date]).format('YYYY-MM-DD')
+      const formattedDate = moment(action.date).format('YYYY-MM-DD')
       const newList = Array.from(state[formattedDate])
       newList.push(action.res.result)
       return {

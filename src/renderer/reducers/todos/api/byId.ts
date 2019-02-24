@@ -1,5 +1,4 @@
-import Todo from '../../../types/Todo'
-import { StateById } from '../../types'
+import { StateTodosAPI } from '../../types'
 
 import {
   ActionAddTodoSuccess,
@@ -14,7 +13,7 @@ type Actions = ActionAddTodoSuccess | ActionFetchTodosSuccess | ActionUpdateTodo
 
 const defaultState = {}
 
-const byId = (state: StateById<Todo> = defaultState, action: Actions): StateById<Todo> => {
+const byId = (state: StateTodosAPI['byId'] = defaultState, action: Actions): StateTodosAPI['byId'] => {
   switch (action.type) {
     case ADD_TODO_SUCCESS:
     case FETCH_TODOS_SUCCESS:
