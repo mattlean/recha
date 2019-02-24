@@ -2,7 +2,6 @@ import { normalize } from 'normalizr'
 
 import {
   ActionFetchTodosSuccess,
-  ActionSelectTodo,
   ActionStartTodosReq,
   ActionUpdateTodoFormCompleted,
   ActionUpdateTodoFormName,
@@ -11,7 +10,6 @@ import {
   Initiator,
   NormalizedTodoRes,
   NormalizedTodosRes,
-  SELECT_TODO,
   START_TODOS_REQ,
   ThunkDispatch,
   ThunkResult,
@@ -22,7 +20,7 @@ import {
 import Todo from '../types/Todo'
 import { APIRes } from '../types'
 import { todoSchema, todoArraySchema } from '../util/schema'
-import { getTodos, patchTodo } from '../util/api/todos'
+import { getTodos, patchTodo, patchTodoOrders } from '../util/api/todos'
 import { todoIsChecked } from '../util'
 
 export function fetchTodosSuccess(date: Todo['date'], res: APIRes<Todo[]>): ActionFetchTodosSuccess {
@@ -41,11 +39,19 @@ export const startTodosReq = (initiator: Initiator): ActionStartTodosReq => ({
 export const fetchTodos = (date: Todo['date']): ThunkResult<Promise<NormalizedTodosRes>> => (
   dispatch: ThunkDispatch
 ) => {
-  dispatch(startTodosReq('fetchTodos' as Initiator))
+  dispatch(startTodosReq('fetchTodos'))
 
   return getTodos({ date, col: 'order_num', dir: 'ASC' }).then(res =>
     Promise.resolve(dispatch(fetchTodosSuccess(date, res)).res)
   )
+}
+
+export const reorderTodos = (date: Todo['date'], data: number[]): ThunkResult<Promise<NormalizedTodosRes>> => (
+  dispatch: ThunkDispatch
+) => {
+  dispatch(startTodosReq('reorderTodos'))
+
+  return patchTodoOrders(data).then(res => Promise.resolve(dispatch(fetchTodosSuccess(date, res)).res))
 }
 
 export const updateTodoSuccess = (res: APIRes<Todo>): ActionUpdateTodoSuccess => ({
@@ -56,7 +62,7 @@ export const updateTodoSuccess = (res: APIRes<Todo>): ActionUpdateTodoSuccess =>
 export const updateTodo = (id: Todo['id'], data: Partial<Todo>): ThunkResult<Promise<NormalizedTodoRes>> => (
   dispatch: ThunkDispatch
 ) => {
-  dispatch(startTodosReq('updateTodo' as Initiator))
+  dispatch(startTodosReq('updateTodo'))
 
   return patchTodo(id, data).then(res => Promise.resolve(dispatch(updateTodoSuccess(res)).res))
 }
@@ -72,12 +78,6 @@ export const updateTodoFormCompleted = (
 
 export const updateTodoFormName = (id: Todo['id'], name: Todo['name']): ActionUpdateTodoFormName => ({
   type: UPDATE_TODO_FORM_NAME,
-  id,
-  name
-})
-
-export const selectTodo = (id: Todo['id'], name: Todo['name']): ActionSelectTodo => ({
-  type: SELECT_TODO,
   id,
   name
 })

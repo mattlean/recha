@@ -7,13 +7,14 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import AddTodo from '../components/AddTodo'
 import Todo from './Todo'
 import { default as TodoType } from '../types/Todo'
-import { fetchTodos as acFetchTodos } from '../actions/todos'
+import { fetchTodos as acFetchTodos, reorderTodos as acReorderTodos } from '../actions/todos'
 import { rsGetTodoList } from '../selectors'
 import { NormalizedTodosRes } from '../actions/types'
 import { State as ReduxState } from '../reducers/types'
 
 interface DispatchProps {
   fetchTodos: (date: string) => Promise<NormalizedTodosRes>
+  reorderTodos: (date: TodoType['date'], data: number[]) => Promise<NormalizedTodosRes>
 }
 
 type OwnProps = RouteComponentProps<{ date: string; id: string }>
@@ -87,7 +88,9 @@ class TodoList extends Component<Props, ComponentState> {
 
   private onDragEnd = result => {
     const { compTodoList } = this.state
+    const { date } = this.props.match.params
     const { destination, source } = result
+    const { reorderTodos } = this.props
 
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
@@ -96,7 +99,9 @@ class TodoList extends Component<Props, ComponentState> {
     const [movedTodo] = newUITodoList.splice(source.index, 1)
     newUITodoList.splice(destination.index, 0, movedTodo)
 
-    this.setState({ compTodoList: newUITodoList })
+    this.setState({ compTodoList: newUITodoList }, () => {
+      reorderTodos(date, newUITodoList.map(todo => todo.id))
+    })
   }
 
   public render(): JSX.Element {
@@ -147,7 +152,8 @@ const mapStateToProps = (state: ReduxState, ownProps: OwnProps): StateProps => (
 })
 
 const mapDispatchToProps = {
-  fetchTodos: acFetchTodos
+  fetchTodos: acFetchTodos,
+  reorderTodos: acReorderTodos
 }
 
 export default withRouter(

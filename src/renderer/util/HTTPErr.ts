@@ -13,6 +13,12 @@ class HTTPErr extends Error {
 
   public status: number
 
+  /**
+   * Create HTTPErr instance
+   * @param message (Optional) Standard Error parameter. A human-readable description of the error.
+   * @param status (Optional) HTTP status code
+   * @param code (Optional) Error code
+   */
   public constructor(message?: string, status?: number, res?: object) {
     super(message)
     this.name = 'HTTPErr'

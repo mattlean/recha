@@ -4,8 +4,6 @@ import Todo from '../types/Todo'
 import { State } from '../reducers/types'
 
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS'
-export const SELECT_TODO = 'SELECT_TODO'
-export const SELECT_TODO_LIST = 'SELECT_TODO_LIST'
 export const START_TODOS_REQ = 'START_TODOS_REQ'
 export const UPDATE_TODO_FORM_COMPLETED = 'UPDATE_TODO_FORM_COMPLETED'
 export const UPDATE_TODO_FORM_NAME = 'UPDATE_TODO_FORM_NAME'
@@ -13,8 +11,6 @@ export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
 
 export type Actions =
   | ActionFetchTodosSuccess
-  | ActionSelectTodo
-  | ActionSelectTodoList
   | ActionStartTodosReq
   | ActionUpdateTodoFormCompleted
   | ActionUpdateTodoFormName
@@ -24,17 +20,6 @@ export interface ActionFetchTodosSuccess {
   type: typeof FETCH_TODOS_SUCCESS
   date: Todo['date']
   res: NormalizedTodosRes
-}
-
-export interface ActionSelectTodo {
-  type: typeof SELECT_TODO
-  id: Todo['id']
-  name: Todo['name']
-}
-
-export interface ActionSelectTodoList {
-  type: typeof SELECT_TODO_LIST
-  date: Todo['date']
 }
 
 export interface ActionStartTodosReq {
@@ -59,7 +44,7 @@ export interface ActionUpdateTodoSuccess {
   res: NormalizedTodoRes
 }
 
-export type Initiator = 'fetchTodo' | 'updateTodo'
+export type Initiator = 'fetchTodos' | 'reorderTodos' | 'updateTodo'
 
 interface NormalizedBaseTodoRes {
   entities: {

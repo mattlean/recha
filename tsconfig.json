@@ -4,11 +4,11 @@
       "esModuleInterop": true,
       "jsx": "react",
       "lib": ["dom", "es2015"],
-      "outDir": "./build",
+      "outDir": "build",
       "sourceMap": true,
       "target": "es5"
   },
   "include": [
-      "./src/**/*"
+      "src/**/*"
   ]
 }

@@ -39,3 +39,9 @@ export const patchTodo = (id: number, data: any): Promise<APIRes<Todo>> =>
     if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
     return res.json()
   })
+
+export const patchTodoOrders = (data: number[]): Promise<APIRes<Todo[]>> =>
+  fetch(`${TODOS_PATH}/reorder`, genReqOptions('PATCH', data)).then(res => {
+    if (!res.ok) throw new HTTPErr(res.statusText, res.status, res)
+    return res.json()
+  })
