@@ -37,5 +37,7 @@ module.exports = merge([
 
   parts.loadStyles(),
 
+  parts.setFreeVariable('__API__', '/api/v1'),
+
   parts.genSourceMaps({ type: 'cheap-module-eval-source-map' })
 ])

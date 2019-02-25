@@ -48,5 +48,7 @@ module.exports = merge([
 
   parts.purifyCSS({ paths: glob.sync(`${PATHS.renderer.src}/**/*.{js,jsx}`, { nodir: true }) }),
 
+  parts.setFreeVariable('__API__', 'http://localhost:1337/api/v1'),
+
   parts.genSourceMaps({ type: 'source-map' })
 ])

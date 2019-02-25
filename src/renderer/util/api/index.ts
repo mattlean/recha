@@ -8,8 +8,6 @@ interface ReqOptions {
   body?: any // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-export const ROOT_PATH = '/api/v1'
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const genReqOptions = (method: Method, data?: any): ReqOptions => {
   const reqOptions: ReqOptions = {

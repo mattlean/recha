@@ -4,7 +4,7 @@ import fetch from 'cross-fetch'
 import HTTPErr from '../HTTPErr'
 import Todo from '../../types/Todo'
 import { APIRes } from '../../types'
-import { genReqOptions, ROOT_PATH } from '.'
+import { genReqOptions } from '.'
 
 interface TodosQuery {
   col: 'id' | 'date' | 'order_num'
@@ -12,7 +12,8 @@ interface TodosQuery {
   dir: 'ASC' | 'asc' | 'DESC' | 'desc'
 }
 
-const TODOS_PATH = `${ROOT_PATH}/todos`
+// @ts-ignore
+const TODOS_PATH = `${__API__}/todos` // eslint-disable-line no-undef
 
 export const deleteTodo = (id: number): Promise<APIRes<Todo>> =>
   fetch(`${TODOS_PATH}/${id}`, genReqOptions('DELETE')).then(res => {

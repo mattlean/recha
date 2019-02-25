@@ -95,8 +95,7 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0",
-    "uuid": "^3.3.2"
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",

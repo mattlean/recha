@@ -1,5 +1,5 @@
 import path from 'path'
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron' // eslint-disable-line import/no-extraneous-dependencies
 
 if (process.env.NODE_ENV === 'development') {
   var { default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } = require('electron-devtools-installer') // eslint-disable-line @typescript-eslint/no-var-requires, global-require, import/no-extraneous-dependencies, no-var, vars-on-top
