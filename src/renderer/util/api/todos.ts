@@ -12,8 +12,15 @@ interface TodosQuery {
   dir: 'ASC' | 'asc' | 'DESC' | 'desc'
 }
 
-// @ts-ignore
-const TODOS_PATH = `${__API__}/todos` // eslint-disable-line no-undef
+let ROOT_PATH
+if (process.env.NODE_ENV === 'test') {
+  ROOT_PATH = '/api/v1'
+} else {
+  // @ts-ignore
+  ROOT_PATH = __API__ // eslint-disable-line no-undef
+}
+
+const TODOS_PATH = `${ROOT_PATH}/todos`
 
 export const deleteTodo = (id: number): Promise<APIRes<Todo>> =>
   fetch(`${TODOS_PATH}/${id}`, genReqOptions('DELETE')).then(res => {
