@@ -16,7 +16,9 @@ module.exports = merge([
 
   parts.loadHTML({
     template: `${PATHS.renderer.src}/index.html`,
-    templateParameters: { csp: '<meta http-equiv="Content-Security-Policy" content="script-src \'self\'">' }
+    templateParameters: {
+      csp: `<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src http://localhost:1337; font-src https://fonts.gstatic.com; script-src 'self'; style-src 'self' 'unsafe-inline' blob: https://fonts.googleapis.com;">`
+    }
   }),
 
   parts.minJS(),
@@ -28,27 +30,29 @@ module.exports = merge([
     }
   }),
 
-  parts.extractStyles({
-    filename: 'style.css',
-    use: [
-      {
-        loader: 'css-loader',
-        options: { sourceMap: true }
-      },
-      {
-        loader: 'sass-loader',
-        options: {
-          includePaths: ['node_modules'],
-          sourceMap: true
-        }
-      },
-      parts.autoprefix()
-    ]
-  }),
+  parts.loadStyles(),
+
+  // parts.extractStyles({
+  //   filename: 'style.css',
+  //   use: [
+  //     {
+  //       loader: 'css-loader',
+  //       options: { sourceMap: true }
+  //     },
+  //     {
+  //       loader: 'sass-loader',
+  //       options: {
+  //         includePaths: ['node_modules'],
+  //         sourceMap: true
+  //       }
+  //     },
+  //     parts.autoprefix()
+  //   ]
+  // }),
 
   parts.purifyCSS({ paths: glob.sync(`${PATHS.renderer.src}/**/*.{js,jsx}`, { nodir: true }) }),
 
-  parts.setFreeVariable('__API__', 'http://localhost:1337/api/v1'),
+  parts.setFreeVariable('__API__', 'http://localhost:1337/v1'),
 
   parts.genSourceMaps({ type: 'source-map' })
 ])
