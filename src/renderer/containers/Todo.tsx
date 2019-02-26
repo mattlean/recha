@@ -34,7 +34,7 @@ class Todo extends Component<Props, State> {
     super(props)
     const { updateTodo } = props
 
-    this.debouncedUpdateTodo = debounce(updateTodo, 500)
+    this.debouncedUpdateTodo = debounce(updateTodo, 1000)
   }
 
   private handleChange = (evt): void => {

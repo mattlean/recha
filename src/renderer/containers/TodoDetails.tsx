@@ -55,7 +55,7 @@ class TodoDetails extends Component<Props, ComponentState> {
     }
     this.state = { details, openModal: false }
 
-    this.debouncedUpdateTodo = debounce(updateTodo, 500)
+    this.debouncedUpdateTodo = debounce(updateTodo, 1000)
   }
 
   public componentDidUpdate(prevProps): void {
