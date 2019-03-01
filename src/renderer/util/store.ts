@@ -16,7 +16,7 @@ export const setupStore = (
   // @ts-ignore
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   if (preloadedState !== undefined) {
-    return createStore(reducer, preloadedState, composeEnhancers(applyMiddleware(...middlewares)))
+    return createStore(reducer, preloadedState, composeEnhancers(applyMiddleware(...m)))
   }
-  return createStore(reducer, composeEnhancers(applyMiddleware(...middlewares)))
+  return createStore(reducer, composeEnhancers(applyMiddleware(...m)))
 }

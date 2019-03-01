@@ -109,7 +109,7 @@ class TodoDetails extends Component<Props, ComponentState> {
 
   public render(): JSX.Element {
     const { date, id } = this.props.match.params
-    const { formTodoName, history, todo } = this.props
+    const { formTodoName, todo } = this.props
     const modalButtons = [
       <DialogButton key="keep" action="keep">
         Keep

@@ -65,7 +65,7 @@ class Todo extends Component<Props, State> {
     const { formTodoName, index, todo } = this.props
 
     if (todo) {
-      const { completed_at, id } = todo
+      const { id } = todo
 
       /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
       return (

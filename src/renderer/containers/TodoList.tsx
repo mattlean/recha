@@ -105,7 +105,6 @@ class TodoList extends Component<Props, ComponentState> {
   }
 
   public render(): JSX.Element {
-    const { fetchTodos } = this.props
     const { date } = this.props.match.params
     const { compTodoList } = this.state
 

@@ -51,7 +51,7 @@ const loadFiles = ({ exclude, include, options, test, type } = {}) => {
 // Autoprefix CSS
 exports.autoprefix = () => ({
   loader: 'postcss-loader',
-  options: { plugins: () => [require('autoprefixer')()] } // eslint-disable-line global-require
+  options: { plugins: () => [require('autoprefixer')()] }
 })
 
 // Clean paths
