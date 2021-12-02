@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import fetch from 'cross-fetch'
 
 import HTTPErr from '../HTTPErr'
