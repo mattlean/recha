@@ -1,6 +1,2 @@
 build/
-coverage/
 node_modules/
-.eslintcache
-stats.*.json
-yarn-error.log

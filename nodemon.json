@@ -1,5 +1,0 @@
-{
-  "ext": "js,json,jsx,ts,tsx",
-  "ignore": ["*.test.js", "*.test.jsx", "*.test.ts", "*.test.tsx"],
-  "watch": ["config", "src/main", "nodemon.json", "webpack.config.js"]
-}

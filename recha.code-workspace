@@ -1,21 +1,13 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"editor.formatOnSave": true,
-		"editor.insertSpaces": true,
-		"editor.tabSize": 2,
-		"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-		"files.trimTrailingWhitespace": true,
-		"search.exclude": {
-			"build/": true,
-			"coverage/": true,
-			".eslintcache": true,
-			"stats.*.json": true,
-			"yarn.lock": true
-		}
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true
+  },
+  "extensions": {
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+  }
 }
