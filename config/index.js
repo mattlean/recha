@@ -1,12 +1,14 @@
-const { merge } = require('webpack-merge')
-const { resolve } = require('path')
 const {
   buildHTML,
   cleanOutput,
   compileBabel,
+  copyFiles,
   injectCSS,
   setupDevServer,
 } = require('ljas-webpack')
+const { merge } = require('webpack-merge')
+const { resolve } = require('path')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 const { BUILD, SRC } = require('./paths')
 
 module.exports = merge(
@@ -21,6 +23,15 @@ module.exports = merge(
     mode: 'development',
   },
 
+  {
+    plugins: [
+      new WorkboxPlugin.GenerateSW({
+        clientsClaim: true,
+        skipWaiting: true,
+      }),
+    ],
+  },
+
   compileBabel('ts+react'),
 
   buildHTML({
@@ -29,6 +40,10 @@ module.exports = merge(
   }),
 
   injectCSS(),
+
+  copyFiles({
+    patterns: [{ from: 'src/manifest.json', to: 'manifest.json' }],
+  }),
 
   setupDevServer({
     static: BUILD,
